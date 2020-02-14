@@ -1,0 +1,43 @@
+List<Integer> list = new ArrayList<>();
+    public int[] findFrequentTreeSum(TreeNode root) {
+        if(root == null){
+            return new int [0];
+        }
+    int leftSum = frequentTreeSumTraversal(root.left);
+    int rightSum = frequentTreeSumTraversal(root.right);
+        list.add(leftSum + rightSum + root.val);
+        Map<Integer, Integer>map= new HashMap<>();
+        boolean maxone = false;
+        int maxCount = 1;
+        int maxSum = 0;
+        for(int i = 0; i < list.size(); i++){
+            int count = map.getOrDefault(list.get(i), 0);
+            map.put(list.get(i),count+1);
+            if(count >= maxCount){
+               maxone = true;
+                maxCount = count;
+                maxSum = list.get(i);
+            
+            }
+            
+        }
+        if(maxone == false){
+            int[] arr = list.stream().mapToInt(i->i).toArray();
+            return arr;  
+        } else{
+            int [] arr = new int [1];
+            arr[0] = maxSum;
+            return arr;
+        }
+      
+    }
+    public int frequentTreeSumTraversal(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        int left = frequentTreeSumTraversal(root.left);
+        int right =frequentTreeSumTraversal(root.right);
+        list.add(root.val+left+right);
+        return (left + right + root.val);
+        
+    }
