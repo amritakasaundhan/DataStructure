@@ -1,0 +1,28 @@
+class Solution {
+    public int getDistance(int xPoint, int yPoint){
+        int dis = (xPoint - 0)*(xPoint - 0) + (yPoint - 0)*(yPoint - 0);
+        return dis;
+    }
+    public int[][] kClosest(int[][] points, int K) {
+        if(points == null || points.length == 0){
+            return new int [0][0];
+        }
+            
+        int [] distance = new int[points.length];
+        for(int i = 0; i < points.length ; i++){
+                distance[i] = getDistance(points[i][0], points[i][1]);
+        }
+        Arrays.sort(distance);
+        int kCloset = distance[K-1];
+        int [][] arr = new int [K][2];
+        int index = 0;
+        for(int i = 0; i < points.length; i++){
+            if(getDistance(points[i][0], points[i][1]) <= kCloset){
+            arr[index][0] = points[i][0];
+            arr[index][1] = points[i][1];
+                index++;
+            }
+        }
+        return arr;
+    }
+}
