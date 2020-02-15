@@ -1,0 +1,26 @@
+class Solution {
+    
+    public int getSum(int n) {
+        int sum = 0;
+        while( n > 0){
+           sum = sum + (n%10)*(n%10);
+            n = n/10; 
+        }
+        
+        return sum;
+    }
+    public boolean isHappy(int n) {
+        int slowRunner = n;
+        int fastRunner = getSum(n);
+        while((fastRunner != 1) && (slowRunner != fastRunner)){
+            slowRunner = getSum(slowRunner);
+            fastRunner = getSum(getSum(fastRunner));
+        }
+        if(fastRunner == 1){
+            return true;
+        } else{
+            return false;
+        }
+        
+    }
+}
