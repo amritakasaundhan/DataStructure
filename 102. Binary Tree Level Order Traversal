@@ -1,0 +1,61 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+// recursion solution
+ // List<List<Integer>> finaList = new ArrayList <>();
+ //    public List<List<Integer>> levelOrder(TreeNode root) {
+ //         if(root == null){
+ //             return finaList;
+ //         }
+ //        bfs(root, 0);
+ //        return finaList;
+ //    }
+ //    public void bfs(TreeNode root, int level) {
+ //         if(finaList.size() == level){
+ //             finaList.add(new ArrayList<Integer>());
+ //         }
+ //        finaList.get(level).add(root.val);
+ //        if(root.left != null){
+ //            bfs(root.left, level+1);
+ //        }
+ //        if(root.right != null){
+ //            bfs(root.right, level+1);
+ //        }
+ //    }
+
+class Solution {
+   
+    public List<List<Integer>> levelOrder(TreeNode root) {
+     List<List<Integer>> finaList = new ArrayList <>();
+        if(root == null){
+            return finaList;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int level = 0;
+        while(!queue.isEmpty()){
+            
+            int queueSize = queue.size();
+            finaList.add(new ArrayList<Integer>());
+            for(int i = 0; i < queueSize; i++){
+                TreeNode newNode = queue.poll();
+                finaList.get(level).add(newNode.val);
+                    if(newNode.left != null){
+                    queue.add(newNode.left);
+                    }
+                    if(newNode.right != null){
+                    queue.add(newNode.right);
+                    }
+            }
+            
+        level++;
+        }
+        return finaList;
+    }
+}
