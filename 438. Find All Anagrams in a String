@@ -38,3 +38,42 @@ public static List<Integer> findAnagrams(String s, String p) {
         return list;
     }
 }
+
+class Solution {
+public static List<Integer> findAnagrams(String s, String p) {
+        if(s == null && p == null){
+            return new ArrayList<>();
+        }
+        if(s.length() < p.length()){
+            return new ArrayList<>();
+        }
+        Map<Character, Integer> map = new HashMap<>();
+        for(int i = 0 ; i < p.length(); i++){
+            int count = map.getOrDefault(p.charAt(i), 0);
+            map.put(p.charAt(i), count+1);
+        }
+        
+        List<Integer> list = new ArrayList<>();
+        Map<Character, Integer> newMap = new HashMap<>();
+    
+        for(int i = 0; i < s.length(); i++){
+            char ch = s.charAt(i);
+            int count = newMap.getOrDefault(ch, 0);
+            newMap.put(ch, count+1);
+            if(i >= p.length()){
+                ch = s.charAt(i-p.length());
+                if(newMap.get(ch)==1){
+                    newMap.remove(ch);
+                }else{
+                    newMap.put(ch, newMap.get(ch)-1);
+                }
+            }
+            if(map.equals(newMap)){
+                list.add(i - p.length()+1);
+            }
+        }
+            
+    
+        return list;
+    }
+}
