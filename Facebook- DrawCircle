@@ -1,0 +1,15 @@
+//Let us say that we already have an Api drawPoint(int x, int y), which can draw a point at position(x,y) on screen.
+//I would like you to implement drawCircle(int a, int b, int r) which should draw a circle whose center is (a,b) and radius is r
+
+void drawCircle(int a, int b, int r)
+{
+	const int r_sqr = r * r;
+	for (int x = 0; x <= r; ++x)
+	{
+		int y = sqrt(r_sqr - x*x);
+		drawPoint(a + x, b + y);
+		drawPoint(a + x, b - y);
+		drawPoint(a - x, b + y);
+		drawPoint(a - x, b - y);
+	}
+}
