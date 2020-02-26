@@ -1,0 +1,30 @@
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        if(candidates.length == 0 || candidates == null){
+            return new ArrayList<>();
+        }
+        List<List<Integer>> finalList = new ArrayList<>();
+        helper(finalList, new ArrayList<>(), candidates, target , 0);
+        return finalList;
+    }
+    public void helper(List<List<Integer>> finalList, List<Integer> list, int[] candidates, int target, int index) {
+        
+        if(index > candidates.length-1){
+            return; 
+        }
+        if(target < 0){
+            return; 
+        }
+        if(target == 0){
+            finalList.add(new ArrayList<>(list));
+            return;
+        }
+        if(target-candidates[index] <= target){
+           list.add(candidates[index]);
+            helper(finalList,list,candidates, target-candidates[index], index);
+            list.remove(list.size()-1);
+        }
+        index = index+1;
+        helper(finalList,list,candidates, target,index );
+    }
+}
