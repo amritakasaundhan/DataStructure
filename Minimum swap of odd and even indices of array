@@ -1,0 +1,32 @@
+static int minMovesToEvenFollowedByOdd(int[] arr) {
+		int moves = 0;
+		int totalLength = arr.length;
+		for (int i = 0; i < totalLength / 2; i++) {
+			if (arr[i] % 2 != 0) {
+				for (int j = totalLength / 2; j < totalLength; j++) {
+					if (arr[j] % 2 == 0) {
+						int temp = arr[i];
+						arr[i] = arr[j];
+						arr[j] = temp;
+						moves++;
+						break;
+					} else {
+						continue;
+					}
+				}
+			} else {
+				continue;
+			}
+		}
+		return moves;
+	}
+	
+	// Driver code 
+	public static void main(String args[]) 
+	{ 
+		int arr[] = {6, 3, 4, 5}; 
+		int n = arr.length; 
+	
+		System.out.println(minMovesToEvenFollowedByOdd(arr));
+    }
+} 
