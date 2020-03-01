@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    TreeNode rootX = null;
+    TreeNode rootY = null;
+    int heightX = -1;
+    int heightY = -1;
+    public boolean isCousins(TreeNode root, int x, int y) {
+        dfs(root,x, y, 0,null);
+        if((rootX != rootY) && (heightX == heightY)){
+           return true; 
+        }else{
+            return false;
+        }
+        
+    }
+    public void dfs(TreeNode root, int x, int y, int level, TreeNode node) {
+        if(root == null){
+            return;
+        }
+        if(root.val == x){
+            rootX = node;
+            heightX = level;
+        }
+        if(root.val == y){
+            rootY = node;
+            heightY = level;
+        }
+        dfs(root.left,x, y, level+1,root);
+        dfs(root.right,x, y, level+1,root);
+    }
+}
