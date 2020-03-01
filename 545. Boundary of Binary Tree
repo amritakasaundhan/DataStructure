@@ -1,0 +1,66 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void addleaves(List<Integer> list, TreeNode root) {
+          if(root == null){
+              return ; 
+          }
+        if(isnode(root)){
+            list.add(root.val);
+        }
+        addleaves(list, root.left);
+        addleaves(list, root.right);
+    }
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+      if(root == null){
+          return new ArrayList<>();
+      }
+        List<Integer> list = new ArrayList<>();
+        if(!isnode(root)){
+          list.add(root.val);  
+        }
+        
+        TreeNode t = root.left;
+        while(t != null){
+            if(!isnode(t)){
+                list.add(t.val);
+            }
+            if(t.left != null){
+                t = t.left;
+            }else{
+                t = t.right;
+            }
+        }
+        addleaves(list, root);
+        Stack<Integer> stack = new Stack<>();
+        t = root.right;
+        while(t != null){
+            if(!isnode(t)){
+                stack.push(t.val);
+            }
+            if (t.right != null) {
+                t = t.right;
+            } else {
+                t = t.left;
+            }
+        }
+        while(!stack.empty()){
+            list.add(stack.pop());
+        }
+        return list;
+        
+    }
+    public boolean isnode(TreeNode root) {
+          if(root.left == null && root.right == null){
+              return true;
+          }
+        return false;
+    }
+}
