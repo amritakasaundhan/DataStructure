@@ -1,0 +1,85 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if(l1 == null && l2 == null){
+            return null;
+        }
+        if(l1 == null){
+            return l2;
+        }
+        if(l2 == null){
+            return l1;
+        }
+        ListNode l1_head = reverse(l1);
+        ListNode l2_head = reverse(l2);
+        int sum = l1_head.val+l2_head.val;
+        int carry = sum/10;
+        sum = sum%10;
+        ListNode t = new ListNode(sum);
+        ListNode newnode = t;
+        //System.out.print(" " +sum);
+        l1_head = l1_head.next;
+        l2_head = l2_head.next;
+    
+        while(l1_head != null && l2_head != null){
+            sum = carry+l1_head.val+l2_head.val;
+            carry = sum/10;
+            sum = sum%10;
+            ListNode node = new ListNode(sum);
+            //System.out.print(" " +sum);
+            newnode.next = node;
+            newnode = newnode.next;
+            l1_head = l1_head.next;
+            l2_head = l2_head.next; 
+        }
+        while(l1_head != null){
+            sum = carry+l1_head.val;
+            carry = sum/10;
+            sum = sum%10;
+            ListNode node = new ListNode(sum);
+            //System.out.print(" " +sum);
+            newnode.next = node;
+            newnode = newnode.next;
+            l1_head = l1_head.next; 
+        }
+        while(l2_head != null){
+            sum = carry+l2_head.val;
+            carry = sum/10;
+            sum = sum%10;
+            ListNode node = new ListNode(sum);
+            //System.out.print(" " +sum);
+            newnode.next = node;
+            newnode = newnode.next;
+            l2_head = l2_head.next; 
+        }
+        while(carry > 0){
+            ListNode node = new ListNode(carry%10);
+            newnode.next = node;
+            newnode = newnode.next;
+            carry = carry/10;
+        }
+        
+        return reverse(t);
+    }
+    public ListNode reverse(ListNode node){
+        if(node == null || node.next == null){
+            return node;
+        }
+        ListNode curr = node;
+        ListNode prev = null;
+        while(curr != null){
+            ListNode move_next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = move_next; 
+        }
+        return prev;
+    }
+}
