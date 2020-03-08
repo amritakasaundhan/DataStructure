@@ -1,0 +1,35 @@
+class Solution {
+    public String removeVowels(String S) {
+        if(S.length() == 0 || S == null){
+            return S;
+        }
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < S.length(); i++){
+            char ch = S.charAt(i);
+            if(! isVowel(ch)){
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
+    public boolean isVowel(char c){
+        if(c == 'a'){
+            return true;
+        }
+        if(c == 'e'){
+            return true;
+        }
+        if(c == 'i'){
+            return true;
+        }
+        if(c == 'o'){
+            return true;
+        }
+        if(c == 'e'){
+            return true;
+        }if(c == 'u'){
+            return true;
+        }
+        return false;
+    }
+}
