@@ -1,0 +1,41 @@
+/*
+You are given a sorted array consisting of only integers where every element appears exactly twice, except for one element which appears exactly once. Find this single element that appears only once.
+*/
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        if(nums.length == 0 || nums== null){
+            return 0;
+        }
+        if(nums.length == 1){
+            return nums[0];
+        }
+        if((nums.length)%2 == 0){
+            return -1;
+        }
+        int start = 0;
+        int end = nums.length-1;
+        while(start < end){
+            int pair1 = nums[start];
+            int pair2 = nums[start+1];
+            if(pair1 != pair2){
+                if(pair1 == nums[start+2]){
+                    return pair2;
+                } else{
+                    return pair1;
+                }
+            }
+            pair1 = nums[end];
+            pair2 = nums[end-1];
+            if(pair1 != pair2){
+                if(pair1 == nums[end-2]){
+                    return pair2;
+                } else{
+                    return pair1;
+                }
+            }
+            start = start+2;
+            end = end-2;
+        }
+        return nums[nums.length/2];
+    }
+}
