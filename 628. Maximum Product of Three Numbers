@@ -1,0 +1,11 @@
+public class Solution {
+    public int maximumProduct(int[] nums) {
+        // if(nums.length < 3){
+        //     return(Math.max(Math.max(nums[0], nums[1]), nums[0]*nums[1]))
+        // }
+        Arrays.sort(nums);
+        int len = nums.length-1;
+        int max_sum = Math.max(nums[0] * nums[1] * nums[len], nums[len]* nums[len -1]* nums[len-2]);
+        return max_sum;
+    }
+}
