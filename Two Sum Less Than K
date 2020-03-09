@@ -1,0 +1,20 @@
+class Solution {
+    public int twoSumLessThanK(int[] A, int K) {
+        int max_Sum = Integer.MIN_VALUE;
+        for(int i = 0; i< A.length; i++){
+            for(int j = i+1; j < A.length; j++){
+                int sum = A[i] + A[j];
+                if( sum < K){
+                    if(max_Sum < sum){
+                        max_Sum = sum;
+                    }
+                }
+            }
+        }
+        if(max_Sum != Integer.MIN_VALUE){
+            return max_Sum;
+        } else{
+            return -1;
+        }
+    }
+}
