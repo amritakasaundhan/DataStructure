@@ -1,0 +1,25 @@
+class Solution {
+    public int maxProduct(int[] nums) {
+        if(nums.length == 0 || nums == null){
+            return 0;
+        }
+        int most_Negative = nums[0];
+        int most_Positive = nums[0];
+        int max = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            int value1 = most_Positive*nums[i];
+            int value2 = most_Negative*nums[i];
+            if(nums[i] < 0){
+                most_Negative = Math.min(nums[i], value1);
+                most_Positive = Math.max(nums[i], value2);
+            } else{
+                most_Positive = Math.max(nums[i], value1);
+                most_Negative = Math.min(nums[i],value2);
+            }
+            System.out.print("most_Negative=" + most_Negative);
+            System.out.println(" most_Positive=" + most_Positive);
+            max = Math.max(most_Positive, max);
+        }
+        return max;
+    }
+}
