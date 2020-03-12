@@ -1,0 +1,37 @@
+class Solution {
+    public int[][] highFive(int[][] items) {
+        if(items.length == 0 || items == null){
+            return new int[0][0];
+        }
+        int map_length = 0;
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for(int i = 0; i < items.length; i ++){
+            if(!map.containsKey(items[i][0])){
+                map.put(items[i][0], new ArrayList<Integer>());
+                map_length ++;
+            }
+                map.get(items[i][0]).add(items[i][1]);
+        }
+        int[][] average_num = new int[map_length][2];
+        int j = 0;
+		    for(Map.Entry<Integer, List<Integer>> entry : map.entrySet()){
+                List list = entry.getValue();
+                Collections.sort(list, Collections.reverseOrder());
+                
+                System.out.println(""+ list);
+		        int sum = 0;
+                int list_size = list.size();
+                if(list.size() >= 5){
+                  list_size = 5;  
+                }
+                for(int i = 0; i < list_size; i++){
+                    sum = sum + (int) list.get(i);
+                }
+                sum = sum/ list_size; 
+		        average_num[j][0] = entry.getKey();
+		        average_num[j][1] = sum; 
+                j++;
+		    }
+        return average_num;
+    }
+}
