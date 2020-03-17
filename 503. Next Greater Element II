@@ -1,0 +1,38 @@
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        if(nums.length == 0 || nums == null){
+           return new int [0]; 
+        }
+       int [] result = new int [nums.length]; 
+        for(int i = 0; i< nums.length; i++){
+           int left = 0; 
+            int right = i;
+            int max_num = -1;
+            boolean found = false;
+            System.out.println(i +"i");
+            while(right < nums.length){
+                if(nums[i] < nums[right]){
+                    //System.out.println(right +" right " + nums[right] +" nums[right] ");
+                    result[i] = nums[right];
+                    found = true;
+                    break;
+                }
+                right++;
+            }
+            if(!found){
+                while(left < nums.length){
+                  if(nums[i] < nums[left]){
+                    result[i] = nums[left];
+                    found = true;
+                    break;
+                    }  
+                    left++;
+                }
+            }
+        if(!found){
+            result[i] = -1;
+        }
+        }
+        return result;
+    }
+}
