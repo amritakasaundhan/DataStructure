@@ -1,0 +1,22 @@
+class Solution {
+    public int[] dailyTemperatures(int[] T) {
+        int [] result = new int [T.length];
+        for(int i = 0; i < T.length; i++){
+            boolean found = false;
+            int count = 0;
+            for(int j = i; j < T.length; j++){
+                if(T[i] < T[j]){
+                    result[i] = count;
+                    count = 0;
+                    found = true;
+                    break;
+                }
+            count++;
+            }
+            if(!found){
+                result[i] = 0;
+            }
+        }
+        return result;
+    }
+}
