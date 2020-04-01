@@ -1,0 +1,29 @@
+class NumMatrix {
+// * NumMatrix obj = new NumMatrix(matrix);
+//  * int param_1 = obj.sumRegion(row1,col1,row2,col2);
+    int [][] data ;
+    // int n; 
+    // int m; 
+    public NumMatrix(int[][] matrix) {
+        data = matrix;
+    }
+    
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        if(data.length == 0){
+            return 0;
+        }
+        if(row1 < 0 || row2 < 0 || row1 >= data.length  || row2 >= data.length){
+            return -1;
+        }
+        if(col1 < 0 || col1 >= data[0].length || col2 < 0 || col2 >= data[0].length){
+            return -1;
+        }
+        int sum = 0;
+        for(int i = row1; i <= row2 ; i++){
+            for(int j = col1; j <= col2; j++){
+                sum += data[i][j];
+            }
+        }
+        return sum;
+    }
+}
