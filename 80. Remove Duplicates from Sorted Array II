@@ -1,0 +1,26 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if(nums.length == 0){
+            return 0;
+        }
+        int first = nums[0];
+        int index = 1;
+        int count = 1;
+        int n = nums.length;
+        for(int i = 1; i < n; i++){
+            int second = nums[i];
+            System.out.println(second);
+            if(first == second){
+                count++;
+            }else{
+                first = second;
+                count = 1;
+            }
+            if(count <= 2){
+                nums[index] = nums[i];
+                index = index+1;
+            }
+        }
+        return index;
+    }
+}
