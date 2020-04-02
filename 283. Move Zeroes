@@ -1,0 +1,25 @@
+class Solution {
+    public void moveZeroes(int[] nums) {
+        if(nums.length == 0){
+            return ;
+        }
+        int pointer1 = 0;
+        int pointer2 = 1;
+        while(pointer2 < nums.length){
+            if(nums[pointer1] == 0){
+                if(nums[pointer2] !=0){
+                    int temp = nums[pointer2];
+                    nums[pointer2] = nums[pointer1];
+                    nums[pointer1] = temp;
+                }else{
+                    pointer2++;
+                    continue;
+                }
+            }
+            pointer1++;
+            pointer2++;
+        }
+    }  
+}
+    
+    
