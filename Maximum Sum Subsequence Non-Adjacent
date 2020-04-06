@@ -1,0 +1,33 @@
+class Main {
+  public static int maxSum_NonAdjacent(int [] arr){
+    if(arr.length == 0){
+        return 0;
+    }
+    int inlusive = arr[0];
+    int exclusive = 0;
+    System.out.println("inclusive->" + inlusive + " exclusive->" + exclusive);
+    for(int i = 1; i < arr.length; i++){
+      int include = inlusive;
+      inlusive = Math.max(inlusive, arr[i] + exclusive);
+      exclusive = include;
+      System.out.println("inclusive->" + inlusive + " exclusive->" + exclusive);
+    }
+    return Math.max(inlusive, exclusive);
+  }
+  public static int maxSum_NonAdjacent_recusion(int [] arr, int index){
+    if(index == 0){
+      return arr[0];
+    }
+    if(index == 1){
+      return Math.max(arr[0], arr[1]);
+    }
+    return Math.max(maxSum_NonAdjacent_recusion(arr, index-2)+arr[index], maxSum_NonAdjacent_recusion(arr, index-1));
+    
+  }
+  public static void main(String[] args) {
+    System.out.println("Hello world!");
+    int [] arr = {4, 1, 1, 4, 2, 1};
+    int sum = maxSum_NonAdjacent_recusion(arr, arr.length-1);
+    System.out.println(sum);
+  }
+}
