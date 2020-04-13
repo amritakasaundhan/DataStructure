@@ -1,0 +1,54 @@
+class MinStack {
+
+    /** initialize your data structure here. */
+    List<Integer> list;  
+    int max_size = 1000;
+    PriorityQueue<Integer> queue;
+    int min_index = 0;
+    public MinStack() {
+        list = new ArrayList<Integer>();
+        queue = new PriorityQueue<Integer>();
+    }
+    
+    public void push(int x) {
+        if(list.size() > max_size){
+            return;
+        }
+        list.add(x);
+        queue.add(x);
+    }
+    
+    public void pop() {
+        if(list.size() <= 0){
+            return;
+        }
+        int temp = list.get(list.size()-1);
+        if(temp == queue.peek()){
+            queue.poll();
+        }
+        list.remove(list.size()-1);
+    }
+    
+    public int top() {
+        if(list.size() <= 0){
+            return -1;
+        }
+        return list.get(list.size()-1);
+    }
+    
+    public int getMin() {
+        if(list.size() <= 0){
+            return -1;
+        }
+        return queue.peek();
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
