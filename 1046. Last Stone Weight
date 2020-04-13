@@ -1,0 +1,25 @@
+class Solution {
+    public int lastStoneWeight(int[] stones) {
+        if(stones.length <= 0){
+            return 0;
+        }
+        if(stones.length < 2){
+           return stones[0];
+        }
+        PriorityQueue<Integer>queue = new PriorityQueue<>((x, y) -> y - x);
+        for(int num : stones){
+           queue.add(num); 
+        }
+        //System.out.print("" + queue);
+        while(!queue.isEmpty() && queue.size() > 1 ){
+            int num1 = queue.poll();
+            int num2 = queue.poll();
+            //System.out.print("num1" + num1 + "num2" + num2);
+            queue.add(Math.abs(num2-num1));
+        }
+        if(queue.isEmpty()){
+            return 0;
+        }
+        return queue.peek();
+    }
+}
