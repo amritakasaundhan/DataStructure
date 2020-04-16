@@ -1,0 +1,40 @@
+class Solution {
+    public String stringShift(String s, int[][] shift) {
+        int left = 0; 
+        int right = 0;
+        for(int [] nums : shift){
+            if(nums[0] == 0){
+                left += nums[1];
+            }else if(nums[0] == 1){
+                right += nums[1];
+            }
+        }
+        right = right% s.length();
+        left = left% s.length();
+        int total_shift = Math.abs(left-right);
+        
+        if(left == right){
+            return s;
+        }
+        
+        
+        boolean left_Direction = left > right ? true :false;
+        StringBuilder str = new StringBuilder();
+        if(!left_Direction){
+            for(int i = s.length()-total_shift; i <s.length(); i++){
+                str.append(s.charAt(i));
+            }
+            for(int i = 0 ;i < s.length()-total_shift;i++){
+                str.append(s.charAt(i));
+            }
+        }else{
+            for(int i = total_shift; i <s.length(); i++){
+                str.append(s.charAt(i));
+            }
+            for(int i = 0 ;i < total_shift;i++){
+                str.append(s.charAt(i));
+            }
+        }
+        return str.toString();
+    }
+}
