@@ -1,0 +1,46 @@
+class Solution {
+    public int maxArea(int[] height) {
+        if(height.length < 2){
+            return 0;
+        }
+        
+        int left = 0; 
+        int right = height.length-1;
+        int max_Area = Integer.MIN_VALUE;
+        while(left < right){
+           max_Area = Math.max((right-left)* Math.min(height[left], height[right]),max_Area);
+            if(height[left] < height[right]){
+                left++;
+            }else{
+                right--;
+            }
+        }
+        if(max_Area == Integer.MIN_VALUE){
+            return 0;
+        }else{
+            return max_Area;
+        }
+        
+    }
+}
+
+// public int maxArea(int[] height) {
+//         if(height.length < 2){
+//             return 0;
+//         }
+        
+//         int max_Water = Integer.MIN_VALUE;
+//         for(int i = 0 ; i < height.length; i++){
+//             for(int j = i+1; j < height.length; j++){
+//                 int maxHight = Math.min(height[i], height[j]);
+//                 max_Water = Math.max(max_Water,maxHight*(j-i));
+//                 // System.out.println("i->" + i + " j->" + j + " maxWter->" + max_Water + "maxHight->" + maxHight);
+//             }
+            
+//         }
+//         if(max_Water == Integer.MIN_VALUE){
+//             return 0;
+//         }else{
+//             return max_Water;
+//         }
+//     }
