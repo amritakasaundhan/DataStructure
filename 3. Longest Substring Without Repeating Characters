@@ -1,3 +1,16 @@
+Approach1: 1.Using character set and two pointers i and j intialise at 0, 0 and run loop while i and j are less than string length
+2. Increment pointer j if set does not contains character and find max length using Math.max(maxlength, j-i)
+3. else increment i by one and delete character from set.
+4. return maxlength
+
+Approach2: 1.Using character, Integer map
+2. intialise a variable say j at 0
+3. run a loop until string length
+4. keep in updating j with current index of j in case of repeating character
+5. find max length using Math.max(maxlength, j-i+1)// to cover up starting index at 0
+6. update map with character and its index map.put(character, i+1)// to cover up starting index 0
+7. return maxlength
+
 class Solution {
     public int lengthOfLongestSubstring(String s) {
         int [] arr = new int [128];
@@ -5,13 +18,10 @@ class Solution {
         int maxLength = 0;
         int j = 0 ;
         for(int i = 0 ; i < s.length(); i++){
-            j = Math.max(j , arr[s.charAt(i)]);
-            /*if(map.containsKey(s.charAt(i))){
+            if(map.containsKey(s.charAt(i))){
             j = Math.max(j, map.get(s.charAt(i)));
             }
-            */
             maxLength = Math.max(maxLength, i-j+1);
-            arr[s.charAt(i)] = i+1;
  
         }
         return maxLength;
