@@ -1,3 +1,10 @@
+Appraoch1: Using HashMap. 
+1. Create a hashmap and store the count of characters
+2. in next iteration of string, check the count of charcter in hashmap if its 1 return index else return -1.
+
+Approach2:it the small charcters then use int array to store the count as it ligher than hashmap
+
+
 class Solution {
     public int firstUniqChar(String s) {
         int [] chars = new int [26];
