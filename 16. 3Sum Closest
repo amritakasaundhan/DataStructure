@@ -1,3 +1,14 @@
+Approach1: similar to 3sum
+1. Sort the array to use two pointer
+2. create a loop at ith index
+3. and use two pointer starting at index i+1 and second pointer at arr.length-1
+4. calculate the sum and store it in result varible to track the closet sum to target
+5. if sum < target increment j else decrment k
+6. keep on updating the result by comparing absoluate different between sum-target and result-target
+7. if sum-target is result-target update the result
+8. at the end result the result
+
+
 public class Solution {
     public int threeSumClosest(int[] num, int target) {
         int result = num[0] + num[1] + num[num.length - 1];
