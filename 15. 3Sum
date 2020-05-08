@@ -1,3 +1,24 @@
+Approach1: Using three for loop, sort the elements
+1. intialise three for loops at i=0, j=i+1, k =j+1
+2. Check if any of two elements at ith position jth postion and kth are not equal to avoid duplicacy 
+3. calculate the sum at arr[i]+arr[j]+arr[k]
+4. if sum ==0. insert the elements in list
+5. return list
+Time Complexity n3
+Approach2: using two pointers and sorting the sorting array at first place which should take ologn time complexity
+1. interate in loop starting from i =0 to arr.length-1
+2. check if element at ith postion is not equal to elements i-1(to avoid duplicacy)
+3. pass the ith postion, result list  with array in a fucntion to get the sum at ith postion and two pinters 
+4. start j at ith+1 postion and k at arr.lenght-1
+5. if sum is greater than zero then drecement k pointer by one
+6. if sum is less than zero then increment j pointer by one
+7. if sum is euqal to zero then add elements in list and  increment j pointer by one and decrekment j by one
+8. also verify that element at j-1 and k+1 are not equal to avoid duplicate elements in array
+
+
+
+
+
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
@@ -19,13 +40,9 @@ class Solution {
             }else if(sum > 0 ||(right < nums.length-1 && nums[right] == nums[right+1])){//decrement right if the value is the same as for right + 1
                 right--;
             }else{
-                List<Integer>list = new ArrayList<>();
-                list.add(nums[index]);
-                list.add(nums[left]);
-                list.add(nums[right]);
+                result.add(Array.asList(nums[i], nums[left]), nums[right]);
                 left++;
                 right--;
-                result.add(list);
             }
         }
     }
