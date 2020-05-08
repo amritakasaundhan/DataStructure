@@ -1,3 +1,21 @@
+Approach1: Brute force approach
+1. intialise two loop at i== 0 and j ==1 until the length-1 of array and one variable holing the max value of water
+2. calculate most water by multiplying min of arr[i] and arr[j] with j-i
+3. update the maxwater varible
+4. return maxwater after the both booth ends
+Time complexity n2
+
+Appoach2: using two pointers
+1. intialise i at 0 and j at array.lenght-1
+2. calculate the maxwater by taking Math.max(maxwater, minimum of arr[i] and arr[j] multiply by j-i)
+2. if element at ith position is less element at jth postion, increment i by one else decrement j by one
+3. return maxwater
+Time complexity n
+
+
+
+
+
 class Solution {
     public int maxArea(int[] height) {
         if(height.length < 2){
