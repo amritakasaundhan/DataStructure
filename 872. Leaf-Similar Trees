@@ -1,0 +1,48 @@
+Approach: Using dfs
+Store the leaf nodes  of both the trees in two seperate list
+Compare the two list and return true if euqals else return false
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        List<Integer> list1 = new ArrayList<>();
+        find_Leaf_Nodes(root1, list1);
+        List<Integer> list2 = new ArrayList<>();
+        find_Leaf_Nodes(root2, list2);
+        
+        return list1.equals(list2);
+    }
+    public void find_Leaf_Nodes(TreeNode root, List<Integer> result){
+        if(root != null){
+            if(isNode(root)){
+                result.add(root.val);
+                return;
+            }
+            find_Leaf_Nodes(root.left, result);
+            find_Leaf_Nodes(root.right, result);
+        }
+        
+    }
+    public boolean isNode(TreeNode root){
+        if(root.left == null && root.right == null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
