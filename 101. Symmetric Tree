@@ -1,39 +1,34 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+Approach: Using Recursion
+Keep on comparing left value with right value in recursion and return the result
+Pass root.left and root.right in helper method and pass 4 base conditions:
+1. return true both left and right are null
+2. return false of any of the treenodes are null
+3. return false if both the Treenodes contains  different value
+
 class Solution {
     public boolean isSymmetric(TreeNode root) {
         if(root == null){
             return true;
         }
-        return dfs(root.left, root.right);
+        return isSymmetricUtil(root.left, root.right);
+
     }
-    public boolean dfs(TreeNode left, TreeNode right) {
-        if(left == null && right == null){
-            return true;
-        }
-        if(left != null && right == null){
-            return false;
-        }
-        if(left == null && right != null){
-            return false;
-        }
-        if(left.val != right.val){
-            return false;
-        }
-        boolean leftVal = dfs(left.left, right.right);
-        boolean rightVal = dfs(left.right, right.left);
-        if(leftVal && rightVal){
-            return true;
-        } else{
-            return false;
-        }
+    public boolean isSymmetricUtil(TreeNode leftTree, TreeNode rightTree) {
        
+        if(leftTree == null && rightTree == null){
+            return true;
+        }
+        if(leftTree == null && rightTree != null){
+            return false;
+        }
+        if(leftTree != null && rightTree == null){
+            return false;
+        }
+        if(leftTree.val != rightTree.val){
+            return false;
+        }
+        boolean leftT = isSymmetricUtil(leftTree.left,rightTree.right);
+        boolean rightT = isSymmetricUtil(leftTree.right,rightTree.left);
+        return (leftT && rightT);
     }
 }
