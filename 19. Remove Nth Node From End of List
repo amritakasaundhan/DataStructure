@@ -1,21 +1,18 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
+Approach: Using three pointers
+1. move the curr pointer to kth node from start
+2. intialise a prev pointer to null to track the prev node 
+3. intialise kthnode pointer to head
+4. iterate until curr is not equal to null and increment prev pointer to kthnode, kthnode to kthnode next and curr to curr next
+5. after this check if the prev is equal to null (in case head is the kth node from last)
+6. return kthnode.next(as kthnode would be at head in this condition)
+7. move prev.next to kthnode.next and return head;
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         if(head == null){
             return head;
         }
-        int k = 0;
         ListNode curr = head;
-        ListNode p = null;
-        while(k < n){
-            p = curr;
+        while(curr!= null && n > 0){
             curr = curr.next;
             k++;
         }
