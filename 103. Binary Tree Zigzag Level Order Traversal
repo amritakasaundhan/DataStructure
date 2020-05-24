@@ -1,52 +1,55 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+Approach1: It can be solved using DFS and BFS. Though I would solve this problem using BFS.
+1. I will use queue() to store the nodes and one boolean flag right direction which will be reset at every level.
+2. I will use null root as check point for levels
+3. first add root and null to the queue
+4. traverse in tree until queue is not empty
+5. poll the Treenode and add left and right nodes is they are not null
+6. also add the node value at first if right is true else add at last
+7. if the root is null, this means all the nodes at that level is traversed, add list to the result list
+8. reset the list and reset the direction
+
+
+
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        if(root== null){
+        if(root == null){
             return new ArrayList<>();
         }
-        Queue<TreeNode> nodes = new LinkedList<>();
-        Queue<Integer> level = new LinkedList<>();
-        List<List<Integer>> finalList = new ArrayList<>();
-        nodes.add(root);
-        level.add(0);
-        int levelchange = 0;
-        List<Integer> list = new ArrayList<>();
-        boolean reverese = false;
-        while(!nodes.isEmpty()){
-            TreeNode node = nodes.poll();
-            int l = level.poll();
-            if(node.left != null){
-                nodes.add(node.left);
-                level.add(l+1);  
-            }
-            if(node.right != null){
-                nodes.add(node.right);
-                level.add(l+1);
-            }
-            if(l != levelchange){
-                if(reverese != false){
-                   Collections.reverse(list); 
+        List<List<Integer>> result = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        if(root != null){
+           queue.offer(root);
+           queue.offer(null);
+        }
+        boolean rightDirection = false;
+        LinkedList<Integer> list = new LinkedList<>();
+        while(!queue.isEmpty()){
+            TreeNode temp = queue.poll();
+            if(temp != null){
+                if(temp.left != null){
+                    queue.offer(temp.left) ;
                 }
-                finalList.add(new ArrayList<>(list));
-                list.clear();
-                levelchange = l;
-                reverese = !reverese;
-            }            
-            list.add(node.val);
+                if(temp.right != null){
+                    queue.offer(temp.right) ;
+                } 
+                if(rightDirection){
+                    list.addFirst(temp.val);
+                }else{
+                    list.addLast(temp.val);
+                }
+            }else{
+                rightDirection = !rightDirection;
+                result.add(list);
+                list = new LinkedList<>();
+                if(!queue.isEmpty()){
+                    queue.offer(null);
+                }
+                
+            }
             
         }
-        if(reverese != false){
-            Collections.reverse(list); 
-        }
-        finalList.add(list);
-        return finalList;
+            
+            
+        return result;
     }
 }
