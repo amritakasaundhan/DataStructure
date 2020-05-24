@@ -1,5 +1,7 @@
 Approach1: It can be solved using DFS and BFS. Though I would solve this problem using BFS.
-1. I will use queue() to store the nodes and one boolean flag right direction which will be reset at every level.
+1. I will use queue to store the nodes and one boolean flag right direction which will be reset at every level.
+and a linke list to store integer values. reason of using linkedlist instead of array list is that because it allows elements to be 
+inserted at any place. We will need to add element at begining if case of right direction.
 2. I will use null root as check point for levels
 3. first add root and null to the queue
 4. traverse in tree until queue is not empty
