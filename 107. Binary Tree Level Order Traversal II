@@ -1,37 +1,44 @@
+Approach: I will use bfs approach 
+1. where I will use queue to store the Treenode and null Treenode as check if we traversed all the Treenode of that level.
+2. Store the root and null to the queue
+3. create a while loop until queue is not empty
+4. poll the node and sotre its left and right nodes in queue if they are not null
+5. store the polled node value in the list
+6. once encountered the null node, that means we completed the level, add the list into result list
+7. reset the list and add null to the queue to indetifiy that level
+
+Time complexity should o(n)
+space complexity should be o(n) as we are using queue to store nodes
+
+
 class Solution {
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         if(root == null){
             return new ArrayList<>();
         }
-        List<List<Integer>> resultList = new ArrayList<>();
-        List<Integer> list = new ArrayList<>();
-        Queue<TreeNode> nodes = new LinkedList<>();
-        Queue<Integer> levels = new LinkedList<>();
-        int depth = 1;
-        nodes.add(root);
-        levels.add(1);
-        while(!nodes.isEmpty()){
-            TreeNode temp = nodes.poll();
-            int level = levels.poll();
-            if(depth != level){
-                resultList.add(new ArrayList(list));
-                depth = level;
-                list.clear();
+        LinkedList<List<Integer>> result = new LinkedList<>();
+        LinkedList<Integer> list = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        queue.offer(null);
+        while(! queue.isEmpty()){
+            TreeNode temp = queue.poll();
+            if(temp != null){
+                if(temp.left != null){
+                    queue.add(temp.left);
+                }
+                if(temp.right != null){
+                    queue.add(temp.right);
+                }
+                list.add(temp.val);
+            }else{
+                result.addFirst(list);
+                list = new LinkedList<>();
+                if(!queue.isEmpty()){
+                    queue.offer(null);
+                }
             }
-            list.add(temp.val);
-            if(temp.left != null){
-               nodes.add(temp.left);
-               levels.add(level+1); 
-            }
-            if(temp.right != null){
-                nodes.add(temp.right);
-                levels.add(level+1);  
-            }
-            
-            
         }
-        resultList.add(list);
-        Collections.reverse(resultList);
-        return resultList;
+        return result;
     }
 }
