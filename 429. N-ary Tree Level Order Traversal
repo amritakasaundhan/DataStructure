@@ -1,0 +1,28 @@
+Approach: The problem can be solved using BFS. 
+1. Store the node.val in list and add all the children in queue
+2. As soon as it counters the null, add the list in result list.
+
+class Solution {
+    public List<List<Integer>> levelOrder(Node root) {
+        if(root == null){
+            return new ArrayList<>();
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        while(! queue.isEmpty()){
+            int size = queue.size();
+        
+            for(int i = 0 ; i < size; i++){
+                Node temp = queue.poll();
+                list.add(temp.val);
+                queue.addAll(temp.children);
+            }
+                result.add(list);
+                list = new ArrayList<>();
+            
+        }
+        return result;
+    }
+}
