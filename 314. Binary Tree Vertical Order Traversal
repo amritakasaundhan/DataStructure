@@ -1,0 +1,57 @@
+class Solution {
+    
+    public static class Pair {
+        int value;
+        int level;
+        
+        public Pair(int value, int level) {
+            this.value = value;
+            this.level = level;
+        }
+        
+    }
+    
+    Comparator comparator = new Comparator<Pair>() {
+        @Override
+        public int compare(Pair a, Pair b) {
+            return a.level - b.level;
+        } 
+    };
+    
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        //so do a bfds and 
+        List<List<Integer>> result = new ArrayList<>();
+        TreeMap<Integer, List<Pair>> map = new TreeMap<>();
+        dfs(root, 0, 0, map);
+        
+        
+        for(List<Pair> list : map.values()) {
+            Collections.sort(list, comparator);
+            List<Integer> row = new ArrayList<Integer>();
+            for(Pair pair : list) {
+                row.add(pair.value);
+            }
+            result.add(row);
+        }
+        return result;
+    }
+    
+    public void dfs(TreeNode root, 
+                    int value, 
+                    int level,
+                    TreeMap<Integer, 
+                    List<Pair>> map) {
+        
+        if(root == null) {
+            return;
+        }
+        
+        List<Pair> bucket 
+            = map.getOrDefault(value, new ArrayList<Pair>());
+        bucket.add(new Pair(root.val, level));
+        map.put(value, bucket);
+        
+        dfs(root.left, value - 1, level + 1, map);
+        dfs(root.right, value + 1, level + 1, map);
+    }
+}
