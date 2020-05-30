@@ -1,0 +1,83 @@
+Approach:  
+We will have to create another class having map of character and a boolean to check end of the word.
+also initialise the root within the trie class
+insertword- intialize a current code to root of Trie
+1. iterate in the word and retrive the childern of the character. 
+2. If there is no children then create a trienode for having character as a key 
+3. keep on adding the nodes in the trie until the end of word
+4. set endofword to true at the end of insert operation to support complete search.
+
+whole word search:
+1. keep on iterating in the characters of word. 
+2. anytime if it encounters null children for any of character, return false.
+3. at the end return current.endofword
+for example search "app" in "apple", at the second p it will have current.endofword == false, hence return false.
+
+Prefix based word search:
+1. keep on iterating in the characters of word. 
+2. anytime if it encounters null children for any of character, return false.
+3. at the end return true if the code reaches to end means all the prefix is present in trie
+for example search "app" in "apple". It will keep looking until second p and directly return true at the end.
+
+
+
+
+class Trie {
+    TrieNode root;
+    private class TrieNode{
+        Map<Character, TrieNode> childern;
+        boolean endOfWord;
+        public TrieNode(){
+            childern = new HashMap<>();
+            endOfWord = false;
+        }
+    }
+    public Trie() {
+        root = new TrieNode();
+    }
+    
+    /** Inserts a word into the trie. */
+    public void insertword(String word) {
+       TrieNode current = root;
+        for(int i = 0 ; i< word.length(); i++){
+            char ch = word.charAt(i);
+            TrieNode node = current.childern.get(ch);
+            if(node == null){
+                node = new TrieNode();
+                current.childern.put(ch, node);
+            }
+            current = node;
+        }
+        current.endOfWord = true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        TrieNode current = root;
+        for(int i = 0; i < word.length(); i++){
+             char ch = word.charAt(i);
+            TrieNode node = current.childern.get(ch);
+            if(node == null){
+                return false;
+            }
+            current = node;
+        }
+        return current.endOfWord;
+        
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        TrieNode current = root;
+        for(int i = 0; i < prefix.length(); i++){
+             char ch = prefix.charAt(i);
+            TrieNode node = current.childern.get(ch);
+            if(node == null){
+                return false;
+            }
+            current = node;
+        }
+        return true;
+    }
+}
+
