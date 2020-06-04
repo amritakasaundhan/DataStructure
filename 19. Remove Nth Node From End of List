@@ -1,6 +1,6 @@
 Approach: Using three pointers
 1. move the curr pointer to kth node from start
-2. intialise a prev pointer to null to track the prev node 
+2. intialise a prev pointer to null to track the prev node of kthnode
 3. intialise kthnode pointer to head
 4. iterate until curr is not equal to null and increment prev pointer to kthnode, kthnode to kthnode next and curr to curr next
 5. after this check if the prev is equal to null (in case head is the kth node from last)
@@ -25,7 +25,7 @@ class Solution {
             kthNode = kthNode.next;
         }
         if(prev == null){
-            head = kthNode.next; 
+            head = head.next; //update head; head is the kth node of linkedlist
         }else{
             prev.next = kthNode.next;
         }
