@@ -1,0 +1,103 @@
+Approach 1: find the length of both of linkedlist.
+1. if length of first list is greater than second list move the head until both have equal length or if second list has greater length 
+then move second list until the length equals to the first list.
+2. ietrate in the list until both are null and keep on checking if the nodes are equal. If it is return the node else return false at 
+the end of node.
+Time complexity should O(n+m)
+Space complexity should o(1) as we did not use additional space
+
+Approach2 : Store the nodes  of list A in Hashset 
+1. iterate in list B and keep on checking if curr node of B exists in set. return the node is it exist else return false.
+
+Appraoch3: without knowing length, using two pointer2 starting from headA and headB
+1. traverse in list until nodeA != nodeB.
+2. if anypoint, if nodeA reaches to null, redirects it to head of B. else if nodeB reaches to null redirects it to head of A.
+3. by doing this, suppose listA has 2 node more than listB, in next interation nodeB will have 2 additional nodes than A to reach to null
+4. if two lists have intersaction the last node would be common node.
+5. if there is no intersects, both nodes will be equals at null point.
+
+
+
+
+Approach1:
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null){
+            return null;
+        }
+        ListNode currA = headA;
+        ListNode currB = headB;
+        int lengthA = 0;
+        int lengthB = 0;
+        while(currA != null){
+            currA = currA.next;
+            lengthA++;
+        }
+        while(currB != null){
+            currB = currB.next;
+            lengthB++;
+        }
+        currA = headA;
+        currB = headB;
+        if(lengthB > lengthA){
+           while(currB != null && lengthB != lengthA){
+                currB = currB.next;
+                lengthB--;
+            } 
+        }else{
+           while(currA != null && lengthB != lengthA){
+                currA = currA.next;
+                lengthA--;
+            } 
+        }
+        
+        
+        while((currA != null && currB != null)){
+            if(currA == currB){
+                return currA;
+            }
+            currA = currA.next;
+            currB = currB.next;
+            
+        }
+        return null;
+    }
+}
+Appraoch2 : 
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null){
+            return null;
+        }
+        Set<ListNode> set = new HashSet<>();
+        ListNode currA = headA;
+        ListNode currB = headB;
+        while(currA != null){
+            set.add(currA);
+            currA = currA.next;
+        }
+        while(currB != null){
+            if(set.contains(currB)){
+                return currB;
+            }
+            currB = currB.next;
+        }
+        return null;
+        
+    }
+    
+    Approach3:
+    
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null){
+            return null;
+        }
+        ListNode currA = headA;
+        ListNode currB = headB;
+        while(currA != currB){
+            currA = currA == null ? headB : currA.next;
+            currB = currB == null ? headA : currB.next;
+        }
+        return currA;
+        
+    }
