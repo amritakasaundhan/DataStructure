@@ -1,3 +1,24 @@
+Appraoch1: using stacks of integer to store opening and star character in two seperate stacks and store the indices of these characters
+in corresponding stack. 
+1. in loop until string length, keep on checking if 
+2. character =='(' store in opeing stack
+3. else if character is == '*' store in star stack
+4. else if charatcer is ')', pop from opening stack. if opening is empty pop from star stack, if star is also empty return false.
+5. further we need to check the the index of star corresponding to opening stack
+6. any time is opening pop element index is greater than star pop element return false 
+7. keep on iterating until both stack are empty
+8. at last return if opening stack is empty
+
+
+Approach 2: using two pointers low and high
+intution to care only about balance of the number of extra, open left brackets as we parsed hrough the string
+Furthermore, we can prove these states always form a contiguous interval. Thus, we only need to know the left and right bounds of
+this interval.
+we would keep those intermediate states described above as [lo, hi] = [1, 1], [0, 2], [0, 3], [0, 4], [0, 3]
+
+
+
+
 class Solution {
     public boolean checkValidString(String s) {
        int low = 0; int high = 0;
