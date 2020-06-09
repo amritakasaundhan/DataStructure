@@ -1,0 +1,48 @@
+Appoach1: using 2 for loop at i = 0 and j = length-1
+Iterate the array from left to right:
+
+Iterate from the current element to the beginning of array updating:
+left_max=max(left_max,height[j])
+Iterate from the current element to the end of array updating:
+right_max=max(right_max,height[j])
+answer += min of leftmax and rightmax
+
+
+
+Approach2: Using two pointers left starts at 0th index and right at the length of string-1;
+and two variable one to max of left and second max of right 
+1. check if element at left index is less than element at right index
+2. if yes, now check if element at left index is greater or equals to leftmax
+  if yes then update the leftmax with element at left, else update answer with leftmax -element at left index
+  and increment left pointer
+3. else check if the element at right is greater or equal to the rightmax
+  if yes then update the rightmax, else update answer with rightmax-element at right index.
+  
+time complexity- O(n)
+space complexity- 1
+
+class Solution {
+    public int trap(int[] height) {
+        int leftMax = 0; int rightMax = 0;
+        int answer = 0;
+        int left = 0; int right = height.length-1;
+        while(left < right){
+            if(height[left] < height[right]){
+                if(height[left] >= leftMax){
+                    leftMax = height[left];
+                }else{
+                    answer += leftMax-height[left];
+                }
+                left++;
+            }else{
+                if(height[right] >= rightMax){
+                    rightMax = height[right];
+                }else{
+                    answer += rightMax-height[right];
+                }
+                right--;
+            }
+        }
+        return answer;
+    }
+}
