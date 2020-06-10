@@ -1,3 +1,26 @@
+Appaorch Dynamic programming:
+Using three varibale, maxnegative, maxpositive and max 
+1. keep on iterating in array and update maxpositive with or without including element at given index
+2. update maxnegative with or without including element at given index
+3. keep a track of max by comparing it with maxpositive.
+
+[2, 3, -2, 4]
+maxnegative = 2
+maxpositive = 2
+max = 2
+i=1 
+maxnegative = 3
+maxpositive = 6
+max = 6
+i =2
+maxnegative = min(-12, -2) = -12
+maxpositive = max(-2, -6) = -2
+max = 6
+i =3
+maxnegative = min(-12*4 , 4) = -48
+maxpositive = max(-2*4, 4) = 4
+max = 6
+
 class Solution {
     public int maxProduct(int[] nums) {
         if(nums.length == 0 || nums == null){
