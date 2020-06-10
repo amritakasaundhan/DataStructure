@@ -3,6 +3,8 @@ Using three varibale, maxnegative, maxpositive and max
 1. keep on iterating in array and update maxpositive with or without including element at given index
 2. update maxnegative with or without including element at given index
 3. keep a track of max by comparing it with maxpositive.
+4. anytime encounter negative number then take min of maxpositive*nums[i] and nums[i] to update maxnegative
+5. maxpositive update with max of maxnegative* nums[i] and nums[i]
 
 [2, 3, -2, 4]
 maxnegative = 2
