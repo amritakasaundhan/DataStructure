@@ -1,0 +1,24 @@
+Appoach1: Sliding window
+1. the idea is to shift rigth window by adding a new number on right, reduce the numbers from left if the product is greater orequals to k
+2. at every step update the answer window by current window that is (right-left+1);
+
+
+class Solution {
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        if(nums.length == 0 || k == 0){
+            return 0;
+        }
+        int answer = 0; 
+        int product = 1;
+        int left = 0; 
+        for(int right = 0; right < nums.length ; right++){
+            product *= nums[right];
+            while(left <= right && product >= k){
+                product /= nums[left];
+                left++;
+            }
+            answer += right-left+1;
+        }
+        return answer;
+    }
+}
