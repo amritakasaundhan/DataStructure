@@ -1,0 +1,34 @@
+Appoach1: Brute force using two for loops to keep a track of sum at ith and jth index is less k and a variable max_sum
+1. intialise i at 0 to length-1 and j at i+1 to length-1
+2. at every step calculate the sum of elements at ith index and jth index
+3. update the max_sum if  sum at given indices is less than k and max_sum is less than sum
+4. return max_sum
+Time complexityO(n2)
+space: O(1)
+Approach2: Sort the array, and use left and right pointer intialise at 0th and length-1 index respectivetly
+2. check if the sum of left and right index element is less than k
+3. if it is increment left pointer else decrement right pointer
+4. at every step store the maxsum by comparing current sum
+TIme Complexity O(logn )
+space O(1)
+
+
+
+class Solution {
+    public int twoSumLessThanK(int[] A, int K) {
+        int max_Sum = Integer.MIN_VALUE;
+       for(int i = 0; i < A.length ;i++){
+           for(int j = i+1 ; j < A.length; j++){
+               int sum = A[i] + A[j];
+               if(max_Sum  < sum && sum < K){
+                   max_Sum = sum;
+               }
+           }
+       } 
+        if(max_Sum == Integer.MIN_VALUE){
+            return -1;
+        }else{
+            return max_Sum;
+        }
+    }
+}
