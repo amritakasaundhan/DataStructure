@@ -1,3 +1,7 @@
+Approach: use map to store the sum corresponding to index and a variable to track max length
+and keep on checking is map contains Key sum-k and update the maxlength with its max value.
+
+
 class Solution {
     public int maxSubArrayLen(int[] nums, int k) {
         int Max_subArrayCount = 0;
