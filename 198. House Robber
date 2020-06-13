@@ -1,0 +1,28 @@
+Approach: using dynamic programming
+the idea is to store the maximum rob until the index encounters.
+1. I will create and array of size array
+2. for i == 0 store the 0th index element in array and update the maxrob variable
+2. for i ==1 , store the max of 0th index element and 1st index element, update the maxrob
+3. for rest of index, take max of i-1th index array and sum of i-2 index array+ ith index element in nums and update the maxrob 
+4. return maxrob
+
+
+class Solution {
+    public int rob(int[] nums) {
+        int max_money = 0;
+        int[] arr = new int [nums.length];
+        for(int i = 0 ; i < nums.length; i++){
+            if(i == 0){
+                arr[0] = nums[0];
+                max_money = arr[0];
+            }else if(i ==1){
+                arr[i] = Math.max(arr[i-1], nums[i]);
+                max_money = Math.max(max_money, arr[i]);
+            }else{
+                arr[i] = Math.max(arr[i-1], nums[i]+arr[i-2]);
+                max_money = Math.max(max_money, arr[i]);
+            }
+        }
+        return max_money;
+    }
+}
