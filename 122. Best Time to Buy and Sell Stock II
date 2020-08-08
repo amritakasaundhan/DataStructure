@@ -1,3 +1,9 @@
+We will have two variable profit initialize at 0 and stockrate intialise at elements at 0th index 
+iterate in loop and find max of maxprofit, maxprofit+(prices[i]-stockrate)
+and update the stock rate at each iteration with value at ith index
+at the end return max_profit
+
+
 public int maxProfit(int[] prices) {
         if(prices.length == 0){
             return 0;
