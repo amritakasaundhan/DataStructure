@@ -14,6 +14,8 @@ create while loop until pointer 2 is less than array length
 in every iteration check if element at p1 is greater than element at p2, update pointer p1 = p2 and increment p2 by one
 else update the maxprofit by taking Math.max(max profit, prices[p2]- prices[p1]) and increment only p2 by one
 at the end return max profit.
+time complexity o(n)
+space o(1)
 
 approach 3:
     public int maxProfit(int[] prices) {
