@@ -1,0 +1,31 @@
+Approach: Store the String count of elements in map
+store the elements in priority queue defining sorting method as if the count is equal for both the string then sort based in alphabetical 
+as soon as queue size is greater than k poll the element from queue. 
+store the queue elements in list and return the list
+
+class Solution {
+    public List<String> topKFrequent(String[] words, int k) {
+        Map<String, Integer>map = new HashMap<>();
+        for(String str : words){
+            int count = map.getOrDefault(str, 0);
+            map.put(str, count+1);
+        }
+
+        PriorityQueue<String> queue = new PriorityQueue<String>(
+                (w1, w2) -> map.get(w1).equals(map.get(w2)) ?
+                w2.compareTo(w1) : map.get(w1) - map.get(w2) );
+        for(Map.Entry<String, Integer>element : map.entrySet()){
+            queue.add(element.getKey());
+            if(queue.size() > k){
+               queue.poll(); 
+            }
+        }
+        List<String> result = new ArrayList<>();
+        while(!queue.isEmpty()){
+            result.add(queue.poll());
+        }
+        Collections.reverse(result);
+        return result;
+        
+    }
+}
