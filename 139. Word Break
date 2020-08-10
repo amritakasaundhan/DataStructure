@@ -1,0 +1,37 @@
+Approach: Using BFS
+store the word dict in set.
+store the start index in the queue and run the loop until it queue is empty
+in second loop end=  start+1 to length of the string and check if substring exist in set. if yes store the end index so that in next iteration, it can checked whether any
+substring exist from start to end.
+We will also need a visited flag to keep a track that index is check only once. 
+return true if the end is equals to the s.length else return false.
+
+
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> set = new HashSet<>();
+        for(String str : wordDict){
+            set.add(str);
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        int[] visited = new int[s.length()];
+        queue.add(0);
+        while(!queue.isEmpty()){
+            int start = queue.poll();
+            if(visited[start] == 0){
+               for(int end = start+1; end <= s.length(); end++){
+                    if(set.contains(s.substring(start, end))){
+                        queue.add(end);
+                        if(end == s.length()){
+                            return true;
+                        }
+                    }
+                }
+                visited[start] = 1;
+            }
+            
+            
+        }
+        return false;
+    }
+}
