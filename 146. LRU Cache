@@ -1,3 +1,11 @@
+We can use LinkedHashMap by overriding the method of removing the oldest element as soon the size is greater than capacity.
+it returns true if the oldest entry needs to be deleted 
+The property of LinkedHashMap is, it stores the elements in the input order. 
+So for put method, we just need to put the method
+
+https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html#removeEldestEntry-java.util.Map.Entry-
+
+
 class LRUCache {
     int capacity;
     
@@ -6,7 +14,7 @@ class LRUCache {
         this.capacity = capacity;
         this.map = new LinkedHashMap<Integer, Integer>(){
             protected boolean removeEldestEntry(Map.Entry<Integer,Integer> eldest){
-                return size()> capacity;
+                return size() > capacity;
             }
         };
     }
