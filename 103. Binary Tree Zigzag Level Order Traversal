@@ -1,4 +1,4 @@
-Approach1: It can be solved using DFS and BFS. Though I would solve this problem using BFS.
+Approach1:Though I would solve this problem using BFS.
 1. I will use queue to store the nodes and one boolean flag right direction which will be reset at every level.
 and a linke list to store integer values. reason of using linkedlist instead of array list is that because it allows elements to be 
 inserted at any place. We will need to add element at begining if case of right direction.
@@ -10,8 +10,11 @@ inserted at any place. We will need to add element at begining if case of right 
 7. if the root is null, this means all the nodes at that level is traversed, add list to the result list
 8. reset the list and reset the direction
 
+Approach2:
+using bfs having one queue to store treenode, one queue to track level and one variable to track the direction.
+if left is true store the list original order in reuslt list else store in reverese order 
 
-
+Approach1:
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         if(root == null){
@@ -52,6 +55,46 @@ class Solution {
         }
             
             
+        return result;
+    }
+}
+Apparoach2:
+
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if(root == null){
+            return new ArrayList<>();
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<Integer> level = new LinkedList<>();
+        queue.offer(root);
+        level.offer(0);
+        boolean left = false;
+        List<List<Integer>> result = new ArrayList<>();
+        while(! queue.isEmpty()){
+            List<Integer> list = new ArrayList<>();
+            int l = level.peek();
+            while(!level.isEmpty() && level.peek() == l){
+                TreeNode temp = queue.poll();
+                int templ = level.poll();
+                    list.add(temp.val);
+                   if(temp.left != null){
+                        queue.add(temp.left);
+                        level.add(templ+1);
+                    } 
+                    if(temp.right != null){
+                        queue.add(temp.right);
+                        level.add(templ+1);
+                    }
+            }
+            if(!left){
+                result.add(list);
+            }else{
+                Collections.reverse(list);
+                result.add(list);
+            }
+            left = !left;
+        }
         return result;
     }
 }
