@@ -1,0 +1,29 @@
+Approach: Using recursion: 
+if the root is isLeaf and until there the currSum is equals to given sum, return true.
+
+class Solution {
+    public boolean isLeaf(TreeNode node){
+        return(node.left == null && node.right == null);
+    }
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if(root == null){
+            return false;
+        }
+        return hasSum(root, sum, 0);
+        
+    }
+    public boolean hasSum(TreeNode root, int sum, int currSum){
+        if(root == null){
+            return false;
+        }
+        if(isLeaf(root) && (currSum+root.val == sum)){
+            return true;
+        }
+        if(isLeaf(root) && (currSum+root.val != sum)){
+            return false;
+        }
+        boolean l = hasSum(root.left, sum, currSum+root.val);
+        boolean r = hasSum(root.right, sum, currSum+root.val);
+           return (l || r);
+    }
+}
