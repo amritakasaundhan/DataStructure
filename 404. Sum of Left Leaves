@@ -1,0 +1,76 @@
+Approach1: Using BFS having two queues, one for direction and another for node.
+add root in node queue and "right" indirection queue.
+in loop while queue is not empty , keep on checking the poll node is its direction is "left" and isleaf add the node value to the sum
+while adding left node , add "left" in direction 
+and in right node add"right"
+return sum
+Apppoach2:
+using BFS having one queue for nodes.
+while polling, check the node.left is leaf node. If yes add node.left.val to the sum
+return sum;
+
+Appaoch2:
+class Solution {
+    public boolean isLeaf(TreeNode node){
+        return(node.left == null && node.right == null);
+    }
+
+    public int sumOfLeftLeaves(TreeNode root) {
+       if(root == null){
+           return 0;
+       }
+        int sum = 0;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        boolean left = false;
+        while(!q.isEmpty()){
+            TreeNode temp = q.poll();
+            if(temp.left!= null && isLeaf(temp.left)){
+                sum += temp.left.val;
+            }
+            
+            if(temp.left != null){
+                q.offer(temp.left);
+                //direction.offer("left");
+            }
+            if(temp.right != null){
+                q.offer(temp.right);
+                //direction.offer("right");
+            }
+            
+        }
+        return sum;
+    }
+}
+
+Appoach2:
+
+// public int sumOfLeftLeaves(TreeNode root) {
+//        if(root == null){
+//            return 0;
+//        }
+//         int sum = 0;
+//         Queue<TreeNode> q = new LinkedList<>();
+//         Queue<String> direction = new LinkedList<>();
+//         q.offer(root);
+//         direction.offer("right");
+//         boolean left = false;
+//         while(!q.isEmpty()){
+//             TreeNode temp = q.poll();
+//             String dir = direction.poll();
+//             if(dir == "left" && isLeaf(temp)){
+//                 sum += temp.val;
+//             }
+            
+//             if(temp.left != null){
+//                 q.offer(temp.left);
+//                 direction.offer("left");
+//             }
+//             if(temp.right != null){
+//                 q.offer(temp.right);
+//                 direction.offer("right");
+//             }
+            
+//         }
+//         return sum;
+//     }
