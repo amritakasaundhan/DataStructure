@@ -1,12 +1,48 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+Apprpoach1: Using BFS, having two queues. One for TreeNode and other to track levels.
+add root in the queue and level 0 in the level queue
+run the loop until queue is empty.
+check the peek of level
+run a loop while level.peek() is equals to the curr peek. 
+add the values within list and add left node in queue and increment a level by one add in level queue
+The same way do it for right child.
+after the inner loop ends that needs until now all the elements within levels have been covered. add list in result list.
+At the end return the resultlist.
+
+
+Apprpoach1:
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+       if(root == null){
+           return new ArrayList<>();
+       }
+       Queue<TreeNode> q = new LinkedList<>();
+        Queue<Integer> level = new LinkedList<>();
+        q.offer(root);
+        level.offer(0);
+        List<List<Integer>>result = new ArrayList<>();
+        while(!q.isEmpty()){
+            int l = level.peek();
+            List<Integer>list = new ArrayList<>();
+            while(!level.isEmpty() && level.peek() == l){
+                TreeNode temp = q.poll();
+                int templ = level.poll();
+                list.add(temp.val);
+                if(temp.left!= null){
+                   q.offer(temp.left);
+                    level.add(templ+1);
+                }
+                if(temp.right!= null){
+                   q.offer(temp.right);
+                    level.add(templ+1);
+                }
+                
+            }
+            result.add(list);
+            
+        }
+        return result;
+    }
+}
 // recursion solution
  // List<List<Integer>> finaList = new ArrayList <>();
  //    public List<List<Integer>> levelOrder(TreeNode root) {
