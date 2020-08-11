@@ -7,34 +7,43 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+Approach1: Using TreeMap and Priority Queue and apply dfs. 
+Passing vertical level and breadth level. 
+while recurssion decrement a level by one while going left and increment one by while moving to right
+and every time increment breadth level at level.
+
+
 class Solution {
-    public List<List<Integer>> finalList = new ArrayList<>();
-    public TreeMap<Integer, List<Integer>> map = new TreeMap<>();
     public List<List<Integer>> verticalTraversal(TreeNode root) {
         if(root == null){
-            return finalList;
+            return new ArrayList<>();
         }
-        dfs(root, 0);
-        for( Map.Entry<Integer, List<Integer>> mapElements : map.entrySet()){
-            List<Integer> newList = mapElements.getValue();
-            //Collections.sort(newList);
-            finalList.add(newList);
+        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
+        dfs(root, map, 0, 0);
+        List<List<Integer>> result = new LinkedList<>();
+        for(TreeMap<Integer, PriorityQueue<Integer>> element : map.values()){
+            List<Integer> list = new ArrayList<>();
+            for(PriorityQueue<Integer> ele : element.values()){
+                while(!ele.isEmpty()){
+                    list.add(ele.poll());
+                }
+            }
+            result.add(list);
         }
-        return finalList;
-        
+        return result;
     }
-    public void dfs(TreeNode root, int level) {
+    public void dfs(TreeNode root, TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map, int level, int blevel){
         if(root == null){
-            return ;
+            return;
         }
-        if(map.containsKey(level)){
-            map.get(level).add(root.val);
-        } else{
-            map.put(level, new ArrayList<>());
-            map.get(level).add(root.val);
+        if(!map.containsKey(level)){
+            map.put(level, new TreeMap<>());
         }
-        dfs(root.left, level-1);
-        dfs(root.right, level+1);
-        
+        if(!map.get(level).containsKey(blevel)){
+            map.get(level).put(blevel, new PriorityQueue<Integer>());
+        }
+        map.get(level).get(blevel).add(root.val);
+        dfs(root.left, map, level-1,blevel+1 );
+        dfs(root.right, map, level+1, blevel+1);
     }
 }
