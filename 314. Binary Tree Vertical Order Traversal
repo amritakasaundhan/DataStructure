@@ -1,3 +1,62 @@
+Approach1: Using BFS and map to store vertical level and list.
+three queue, one to store treenode, one to store vertical level and third to store the breadth level.
+add root and level 0 in both the queue. 
+iterate in the loop  until queue is empty. 
+in another while loop leep until the breadth level is equals to the peek. poll the treenode from queue. add left node and right node if not null
+add verticallevel-1 in case of left treenode and vertical level+1 in case of right treenode.
+increment breadth level by one for both of the nodes.
+At the end in a for loop store the map value in result list and return the list
+
+
+
+
+Approach1:
+class Solution {
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        if(root == null){
+            return new ArrayList<>();
+        }
+        TreeMap<Integer, List<Integer>> map = new TreeMap<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<Integer> level = new LinkedList<>();
+        Queue<Integer> v_level = new LinkedList<>();
+        queue.offer(root);
+        level.offer(0);
+        v_level.offer(0);
+        while(! queue.isEmpty()){
+            int l = level.peek();
+            while(! level.isEmpty() && level.peek() == l){
+                TreeNode temp = queue.poll();
+                int templ = level.poll();
+                int tempVl = v_level.poll();
+                if(!map.containsKey(tempVl)){
+                    map.put(tempVl, new ArrayList<>());
+                }
+                map.get(tempVl).add(temp.val);
+                if(temp.left != null){
+                    queue.add(temp.left);
+                    level.add(templ+1);
+                    v_level.add(tempVl-1);
+                }
+                if(temp.right != null){
+                    queue.add(temp.right);
+                    level.add(templ+1);
+                    v_level.add(tempVl+1);
+                }
+            }
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        for(List<Integer> list : map.values()){
+            result.add(list);
+        }
+        return result;
+    }
+    
+}
+
+
+Approach2: 
+
 class Solution {
     
     public static class Pair {
