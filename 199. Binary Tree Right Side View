@@ -1,12 +1,50 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+This question can be solved using bfs and DFS. 
+
+Approach1: Using BFS.do level order traversal and at the end of level store the last node that was encountered. 
+
+Appraoch2 : DFS approach- 
+pass root and level having passing right child first during recurssion and then left.
+so if there is no node present at right for that perticular level, consider the left node. 
+We will use map to do. If map does not contain that level, add to the list. at the return the list.
+
+Approach1:
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        if(root == null){
+            return new ArrayList<>();
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<Integer> level = new LinkedList<>();
+        List<Integer> result = new ArrayList<>();
+        queue.offer(root);
+        level.offer(0);
+        while(!queue.isEmpty()){
+            int l = level.peek();
+            int rightvalue = Integer.MIN_VALUE;
+            while(!level.isEmpty() && level.peek() == l){
+                TreeNode temp = queue.poll();
+                rightvalue = temp.val;
+                int temp_l = level.poll();
+                if(temp.left != null){
+                    queue.offer(temp.left);
+                    level.offer(temp_l+1);
+                }
+                if(temp.right != null){
+                    queue.offer(temp.right);
+                    level.offer(temp_l+1);
+                }
+                
+            }
+            if(rightvalue != Integer.MIN_VALUE){
+                    result.add(rightvalue);
+            }
+        }
+        return result;
+    }
+}
+
+
+Approach2:
 class Solution {
     Map<Integer, Integer> map = new HashMap<>();
     List<Integer> list = new ArrayList <>();
