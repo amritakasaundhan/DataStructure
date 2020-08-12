@@ -1,0 +1,40 @@
+Approach:
+I will use list and index to store node value and will do in order in tree
+while callingn next,  I will return the element at index position and increment i
+in hasnext, I will return if the index < listsize
+
+class BSTIterator {
+    List<Integer> list ;
+    int index;
+    public BSTIterator(TreeNode root) {
+        list = new ArrayList<>();
+        index = 0;
+        inorder(root);  
+    }
+    public void inorder(TreeNode root){
+        if(root == null){
+            return;
+        }
+        inorder(root.left);
+        list.add(root.val);
+        inorder(root.right);
+    }
+    
+    /** @return the next smallest number */
+    public int next() {
+        return list.get(index++);
+        
+    }
+    
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        return (index < list.size());
+    }
+}
+
+/**
+ * Your BSTIterator object will be instantiated and called as such:
+ * BSTIterator obj = new BSTIterator(root);
+ * int param_1 = obj.next();
+ * boolean param_2 = obj.hasNext();
+ */
