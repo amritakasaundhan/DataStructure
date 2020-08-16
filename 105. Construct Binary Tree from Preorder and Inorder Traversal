@@ -1,0 +1,69 @@
+Appraoch: Using dfs
+The idea is to construct the tree using preorder traversal index and finf the indexes using inorder traversal.
+preorder[3, 9, 20, 15, 7]
+inorder[9,3, 15, 20, 7]
+get first index from preorder that is 3 at index 0. traverse from 3 to left in in order . create left treenode 9. go to 9 left which is null now then return. 
+come to 20th node, get index of 20 traverse left to create left tree of 20th node and goes on.
+
+Dry run:
+HashMap: 9->0, 3->1, 15->2, 20->3, 7->4
+start with 0(starting index)-5(length of tree)
+prefix_index = 0
+buid Treenode of 3 
+3.left = 0(left index)-  1(index of 3 in hashmap)
+build tree node of 9 
+prefix_index++,  which is equals to 1
+9.left = 0(left index) - 0(index of 9 in hashmap)
+prefix_index++,  which is equals to 2
+now left index == right index --> return null
+9.right = 1(index of 9 +1) , 1(right index--> 3.left)
+now left index == right index --> return null
+return back to 9.. 9 to return root
+3.right = 2(index of 3 in hashmap +1 == left index) - (5 length of inorder== right index)
+build tree of 20(preorder[preorder_index== 2])
+preorder_index++ which equals to 3
+20.left = 2(left index)- 3(index of 20 in hashmap)
+build tree for 15(preorder[preorder_index== 3])
+preorder_index++ which equals to 4
+15.left = 2(left index) - 2(index of 15 in hashmap )
+left index == right index
+return null for 15.left
+15.rigth = 3(index of 15 in hashmap +1)- 3(right index-- taken from line 25)
+left index == right index
+return null for 15.rigth
+return 15 
+20.right = 4(index of 20 in hashmap +1)- 5(right index --- taken form line 22)
+build tree for 7(preorder[preorder_index== 4])
+preorder_index++ which is equals to 5
+7.left = 4(left index) - 4(index of 7 in hashmap)
+left index == right index
+return null
+7.right = 5(index of 7 in hashmap+1) - 5(tight index taken from line 35)
+left == right
+return null
+return 7
+return 20
+return root 3
+
+class Solution {
+    Map<Integer, Integer> map = new HashMap<>();
+    int preorder_index = 0;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        for(int i = 0; i < inorder.length; i++){
+            map.put(inorder[i], i);
+        }
+        return buildTreeUtil(0,inorder.length, preorder, inorder);
+    }
+    public TreeNode buildTreeUtil(int left_index, int right_index, int[]preorder, int[] inorder){
+        if(left_index >= right_index){
+            return null;
+        }
+        int root_val = preorder[preorder_index];
+        TreeNode root = new TreeNode(root_val);
+        int index = map.get(root_val);
+        preorder_index++;
+        root.left = buildTreeUtil(left_index, index, preorder, inorder);
+        root.right = buildTreeUtil(index+1, right_index, preorder, inorder);
+        return root;
+    }
+}
