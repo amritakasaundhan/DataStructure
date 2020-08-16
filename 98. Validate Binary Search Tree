@@ -1,0 +1,29 @@
+Approach: doing dfs passing minroot value and max root value. 
+while going left update the max_root with root.val and check if the curr root.val is greater than max_root return false.
+while going right check min root and check if the curr root.val is less than min_root return false.
+
+
+class Solution {
+
+    public boolean isValidBST(TreeNode root) {
+        if(root == null){
+            return true;
+        }
+        return isValidBSTUtil(root, null, null);
+    }
+    public boolean isValidBSTUtil(TreeNode root, Integer max_root, Integer min_root){
+        if(root == null){
+            return true;
+        }
+        if(max_root!= null && root.val >= max_root){
+            return false;
+        }
+        if(min_root!= null && root.val <= min_root){
+            return false;
+        }
+        boolean l = isValidBSTUtil(root.left, root.val, min_root);
+        boolean r = isValidBSTUtil(root.right, max_root, root.val);
+        return(l && r);
+    }
+
+}
