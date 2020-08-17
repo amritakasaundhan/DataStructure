@@ -1,0 +1,48 @@
+Approach: Using BFS. At every step check multiply number by 2 and divide by 3 and check if number is equals to the target . If it doe sreturn the number of operation 
+else add number in queue.
+
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+        int n = min_path(10);
+        System.out.println(n);
+        
+    }
+    
+public static int min_path(int target){
+        if(target <= 1){
+            return 0;
+        }
+        Queue<Num> queue = new LinkedList<>();
+        Set<Integer> set = new HashSet<>();
+        queue.offer(new Num(1, 0, "1"));
+        set.add(1);
+        while(!queue.isEmpty()){
+            Num temp = queue.poll();
+            if(temp.number == target){
+                return temp.no_of_operation;
+            }
+            if(!set.contains(temp.number*2)){
+                set.add(temp.number*2);
+                queue.offer(new Num(temp.number*2, temp.no_of_operation+1, temp.path+"*2"));
+            }
+            if(!set.contains(temp.number/3)){
+                set.add(temp.number/3);
+                queue.offer(new Num(temp.number/3, temp.no_of_operation+1, temp.path+"/3"));
+            }
+            
+        }
+        return -1;
+    }
+    static class Num{
+    int number;
+    int no_of_operation;
+    String path;
+    public Num(int number, int no_of_operation, String path){
+        this.number = number;
+        this.no_of_operation = no_of_operation;
+        this.path = path;
+    }
+ }
+}
