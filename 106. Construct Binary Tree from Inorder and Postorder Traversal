@@ -1,0 +1,32 @@
+Approach Using DFS:
+store the elements of inorder corresponding to the index in hashmap to keep a track of start and end index during recurssion 
+pass curr element index+1 and end to the recurssion for right tree and 
+start and index-1 for left tree
+class Solution {
+    int postorder_index;
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        if(inorder.length == 0 || postorder.length == 0){
+            return null;
+        }
+        postorder_index = inorder.length-1;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < inorder.length ; i++){
+           map.put(inorder[i], i); 
+        }
+        return buildTreeUtil(0, postorder.length-1, inorder, postorder, map);
+            
+    }
+    public TreeNode buildTreeUtil(int start, int end , int[] inorder, int[] postorder, Map<Integer, Integer> map){
+        if(start > end){
+            return null;
+        }
+        int value = postorder[postorder_index];
+        TreeNode root = new TreeNode(value);
+        postorder_index--;
+        int index = map.get(value);
+        
+        root.right = buildTreeUtil(index+1, end, inorder, postorder, map);
+        root.left = buildTreeUtil(start, index-1, inorder, postorder, map);
+        return root;
+    }
+}
