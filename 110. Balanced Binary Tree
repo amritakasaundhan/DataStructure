@@ -1,6 +1,14 @@
-Approach: Using recurssion, traverse in binary tree, passing root and level.
+Approach1: Using recurssion, traverse in binary tree, passing root and level.
 at any time enocounter root == null, return the level 
 and check if left level and right level has diffrence > 1 return -1 else return the max of left or right subtree.
+
+
+Approach2: 
+Brut force approach is to check the height at every level and if node if balance or not. 
+we can create a class which has boolan balance and integer height. set boolean flag false at level if enocounter left node hight is great than 1 right node height 
+
+
+Approach1:
 class Solution {
     public boolean isBalanced(TreeNode root) {
        if(root == null){
@@ -26,4 +34,40 @@ class Solution {
         }
         return Math.max(l, r);
     }
+}
+
+Approach2:
+
+class Solution {
+    class HeightBalancedData{
+    boolean balanced;
+    int height;
+    public HeightBalancedData(boolean balanced, int height){
+        this.balanced = balanced;
+        this.height = height;
+    }
+}
+    public boolean isBalanced(TreeNode root) {
+        if(root == null){
+            return true;
+        }
+        return isBalanced_Util(root).balanced;
+    }
+    public HeightBalancedData isBalanced_Util(TreeNode root){
+        if(root == null){
+            return new HeightBalancedData(true, -1);
+        }
+        HeightBalancedData l = isBalanced_Util(root.left);
+        if(!l.balanced){
+            return l;
+        }
+        HeightBalancedData r = isBalanced_Util(root.right);
+        if(!r.balanced){
+            return r;
+        }
+        boolean balanced = Math.abs(l.height - r.height) <= 1 ;
+        int height = Math.max(l.height,  r.height)+1;
+        return new HeightBalancedData(balanced, height);
+    } 
+        
 }
