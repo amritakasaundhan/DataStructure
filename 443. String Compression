@@ -1,0 +1,49 @@
+APproach: Using two pointers to track repeated character and index to track the actual index of array and a variblae count
+in a while loop until p2 < array.length
+check if that character at p1 and p2. if both the equal increment count and p2 by one
+else: 
+update the charcter at index with character p1, increment the index 
+now in a for loop for the number of count ( by converting int count to string and to char array)
+update the charcter at index with  ch, increment the index
+update count with 1 and p1 = p2 
+
+after the for loop update the charcter at p1 position and count 
+return the index
+
+
+class Solution {
+    public int compress(char[] chars) {
+        if(chars.length < 2){
+            return chars.length;
+        }
+        StringBuilder sb = new StringBuilder();
+        int p1 = 0;
+        int p2  = 1;
+        int count = 1;
+        int index = 0;
+        while(p2 < chars.length){
+            if(chars[p1] != chars[p2]){
+                chars[index++] = chars[p1];
+                if(count != 1){
+                  for(char c : Integer.toString(count).toCharArray()) {
+                    chars[index++] = c;
+                    }  
+                }
+                count = 1;
+                p1 = p2;
+            }else{
+                count++;
+            }
+            p2++;  
+        }
+        chars[index++] = chars[p1];
+        if(count != 1){
+          for(char c : Integer.toString(count).toCharArray()) {
+            chars[index++] = c;
+            }  
+        }
+        return index;
+        
+        
+    }
+}
