@@ -1,0 +1,36 @@
+Approach: We will traverse to parent until the parent is same for both node. The only problem is when the height is not same for both the nodes. 
+So we can solve this problem by getting height for both the nodes before hand and traverse the node which has height greater until it reach to height of second node.
+
+
+public TreeNode getLCA(TreeNode node1, TreeNode node2){
+    if(node1 == null  || node2 == null){
+      return null;
+    }
+    int height1 = get_height(node1);
+    int height2 = get_height(node2);
+    if(height1 > height2){
+      while( node1 != null && height1 == height2){
+        if(node1 == node2){
+          return node1;
+        }
+        height1--;
+        node1 = node1.parent;
+      }
+    }else if(height1 < height2){
+      while(node2 != null && height1 == height2){
+        if(node1 == node2){
+          return node1;
+        }
+        height2--;
+        node2 = node2.parent;
+      }
+    }
+    while(node1 != null && node2 != null && node1 != node2){
+      if(node1 = node2){
+        return node1;
+      }
+      node1 = node1.parent;
+      node2 = node2.parent;
+    }
+    return null;
+  }
