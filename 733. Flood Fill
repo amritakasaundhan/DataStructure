@@ -1,0 +1,24 @@
+Approach: Using DFS. keeping track of visited cell, out of bound indices and if color is not equals to the start indices color. 
+update the image with new color and mark it visited and go further in dfs
+
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        if(image.length == 0 || image[0].length == 0){
+            return image;
+        }
+        boolean[][] visited = new boolean[image.length][image[0].length];
+        dfs(image, sr, sc, newColor, visited, image[sr][sc]);
+        return image;
+    }
+    public void dfs(int[][] image, int i, int j, int newColor, boolean[][] visited, int color){
+        if(i < 0 || j < 0 || i >= image.length || j >= image[0].length || visited[i][j] == true || image[i][j] != color){
+            return;
+        }
+        visited[i][j] = true;
+        image[i][j] = newColor;
+        dfs(image, i+1, j, newColor, visited, color);
+        dfs(image, i-1, j, newColor, visited, color);
+        dfs(image, i, j+1, newColor, visited, color);
+        dfs(image, i, j-1, newColor, visited, color);
+    }
+}
