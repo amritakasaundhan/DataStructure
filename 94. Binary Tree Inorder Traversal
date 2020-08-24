@@ -1,0 +1,61 @@
+Approach:
+for every node we need to keep a track if its "left", its yes then add to list. 
+we will store the nodes in deque(avoiding stack because it does not handle null objects) correspondign to the direction. 
+first we will add elements at first position stating from right to have left at top, root in middle and right in bottom to follow inorder traversal property.
+save right child "right" direction, node having "left" and then left having "right".
+[1,null,2,3]
+deque ietration:
+1-"right"- //first iteration in deque 
+result = empty
+null(1.left)-"left", 1-"left", 2(1.right)-"right"    //second iteration in deque 
+result = empty
+1-"left", 2(1.right)-"right"     // third iteration in deque 
+result = 1
+3-"right", 2-"left",null-"right"  //fourth iteration in deque
+result = 1
+null-"right", 3-"left", null-"right", 2-"left",null-"right"  //fourth iteration in deque
+result = 1
+3-"left", null-"right", 2-"left",null-"right"  //fifth iteration in deque
+result = 1, 3
+null-"right", 2-"left",null-"right"  //sixth iteration in deque
+result = 1, 3
+2-"left",null-"right"  //seventh iteration in deque
+result = 1, 3
+null-"right"  //eight iteration in deque
+result = 1, 3, 2
+null queue
+result = 1, 3, 2
+class Solution {
+    class Pair{
+        TreeNode node;
+        String direction;
+        public Pair(TreeNode node, String direction){
+            this.node = node;
+            this.direction = direction;
+        }
+    }
+    public List<Integer> inorderTraversal(TreeNode root) {
+        if(root == null){
+            return new ArrayList<>();
+        }
+        Deque<Pair> stack = new ArrayDeque<>();
+        stack.addFirst(new Pair(root, "right"));
+        List<Integer> result = new ArrayList<>();
+        while(! stack.isEmpty()){
+            Pair temp = stack.removeFirst();
+            if(temp.node != null){
+                if(temp.direction == "left"){
+                    result.add(temp.node.val);
+                }
+                else{
+                    stack.addFirst(new Pair(temp.node.right, "right"));
+                    stack.addFirst(new Pair(temp.node, "left"));
+                    stack.addFirst(new Pair(temp.node.left, "right"));
+                }
+                
+            }
+        }
+        
+       return result; 
+    }
+}
