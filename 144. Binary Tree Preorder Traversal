@@ -1,0 +1,38 @@
+Approach: USing stack kind of date structure which handles the null values as. Deque to store pair having boolean isroot and node itself.
+start from adding right node, left node and root // to have root at top. having boolean false for right node, false for left node and true for root node.
+as soon as it encounters the root true, add in list. 
+
+class Solution {
+
+     class Pair{
+        TreeNode node;
+        boolean is_root;
+        public Pair(TreeNode node, boolean is_root){
+            this.node = node;
+            this.is_root = is_root;
+        }
+    }
+    public List<Integer> preorderTraversal(TreeNode root) {
+        if(root == null){
+            return new ArrayList<>();
+        }
+        Deque<Pair> q = new ArrayDeque<>();
+        q.addFirst(new Pair(root, false));
+        List<Integer> result = new ArrayList<>();
+        while(!q.isEmpty()){
+            Pair temp = q.poll();
+            if(temp.node != null){
+                if(temp.is_root){
+                    result.add(temp.node.val);
+                }else{
+                    q.addFirst(new Pair(temp.node.right, false));
+                    q.addFirst(new Pair(temp.node.left, false));
+                    q.addFirst(new Pair(temp.node, true));
+                }
+            }
+        }
+            
+     return result;
+        
+    }
+}
