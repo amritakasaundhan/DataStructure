@@ -1,0 +1,71 @@
+Appraoch: First create graph having first point of edge as key and list of edges connecting to that point.
+we will have three sets, white, gray and black.
+white set to track all of the elements present in the set, with traversal in dfs remove the entry if has been visited.
+gray box to check if the process is still running, black box is all of elements on that perticular edge has been covered.
+start from any of edge, add it in gray box and continue adding nodes connecting to it. As soon as all of nodes of perticular edge is completed. remove that
+edge from gray box, add it in black box and remove it from white box. Keep the repoeating process until all of the edges are covere.
+
+
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        if(prerequisites.length == 0 || prerequisites[0].length == 0){
+           return true; 
+        }
+        Map<Integer, List<Integer>> graph = new HashMap<>();
+        Set<Integer> white_box = new HashSet<>();
+        Set<Integer> gray_box = new HashSet<>();
+        Set<Integer> black_box = new HashSet<>();
+        for(int[] num : prerequisites){
+            if(!white_box.contains(num[0])){
+                white_box.add(num[0]);
+            }
+            if(!white_box.contains(num[1])){
+                white_box.add(num[1]);
+            }
+            if(!graph.containsKey(num[0])){
+                graph.put(num[0], new ArrayList<>());
+            }
+            graph.get(num[0]).add(num[1]);  
+        }
+        for(int key : graph.keySet()){
+            boolean result = dfs(graph, white_box, gray_box, black_box, key, -1);
+            if(!result){
+                return false;
+            }
+            
+        }
+        return true;
+    }
+    public boolean dfs(Map<Integer, List<Integer>> graph,Set<Integer> white_box, Set<Integer> gray_box , Set<Integer> black_box, int num, int root){
+
+        if(gray_box.contains(num)){
+            return false;
+        }
+        if(!white_box.contains(num) || !graph.containsKey(num) ||graph.get(num).size() == 0){
+            gray_box.remove(num);
+            black_box.add(num);
+            white_box.remove(num);
+            if(graph.containsKey(num) && graph.get(num).size()> 0){ 
+               graph.get(num).remove(graph.get(num).size()-1); 
+            }
+            
+            return true;
+        }
+        gray_box.add(num);
+        for(int i = 0; i < graph.get(num).size(); i++){
+            boolean r = dfs(graph, white_box, gray_box, black_box, graph.get(num).get(i), num);
+            if(!r){
+                return false;
+            }
+                
+        }
+        gray_box.remove(num);
+        black_box.add(num);
+        white_box.remove(num);
+        if(graph.containsKey(num) && graph.get(num).size()> 0){ 
+           graph.get(num).remove(graph.get(num).size()-1); 
+        }
+        return true;
+        
+    }
+}
