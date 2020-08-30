@@ -1,0 +1,36 @@
+Approach: using bfs and variable node to keep a track of min value greater than p value, at every node check if node value is greater than p value and existing 
+inroder node value is greater curr node value - update the in_order
+add left node to queue only if curr node value is greater than p node value. By this way we can avoid nodes which have value less than p value
+ 
+ public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if(root == null){
+            return root;
+        }
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        // int in_order_int = Integer.MAX_VALUE;
+        TreeNode in_order = null;
+        while(!q.isEmpty()){
+            int size = q.size();
+            for(int i = 0; i < size; i++){
+                TreeNode temp = q.poll();
+                if(temp.val > p.val){
+                    if(in_order == null || in_order.val > temp.val){
+                       // in_order_int = Math.min(in_order_int, temp.val);
+                        in_order = temp;  
+                    }
+                    if(temp.left!= null){
+                        q.add(temp.left);
+                    }
+                    if(temp.right!= null){
+                        q.add(temp.right);
+                    }
+                   
+                }else{
+                    if(temp.right!= null){
+                        q.add(temp.right);
+                    }
+                }
+            }
+        }
+        return in_order;
