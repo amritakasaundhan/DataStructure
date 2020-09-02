@@ -1,0 +1,24 @@
+Approach: Using two pointer approach:
+at every node check if value of both nodes are equal, delete the next node and move second pointer
+other wise move both the pointer nodes
+
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null){
+            return head;
+        }
+        ListNode curr1 = head;
+        ListNode curr2 = head.next;
+        while(curr2 != null){
+            if(curr1.val == curr2.val){
+                curr1.next = curr2.next;
+                curr2 = curr2.next;
+            }else{
+                curr1 = curr1.next;
+                curr2 = curr2.next;
+            }
+        }
+        return head;
+        
+    }
+}
