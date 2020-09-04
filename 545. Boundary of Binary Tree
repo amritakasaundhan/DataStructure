@@ -1,12 +1,61 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+collect all the left boundary, leaves and right boundary
+class Solution {
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        if(root == null){
+            return new ArrayList<>();
+        }
+        List<Integer>result = new ArrayList<>();
+        result.add(root.val);
+        if(root.left != null){
+            leftboundary(root.left, result);
+        }
+        getleaves(root.left, result);
+        getleaves(root.right, result);
+        if(root.right != null){
+            rightboundary(root.right, result);
+        }
+        return result;
+    }
+    public void leftboundary(TreeNode root, List<Integer>result){
+        if(root == null ||(root.left == null && root.right == null)){
+            return;
+        }
+        result.add(root.val);
+        if(root.left != null){
+            leftboundary(root.left, result);
+        }else{
+           leftboundary(root.right, result); 
+        }
+    }
+    public void getleaves(TreeNode root, List<Integer>result){
+        if(root == null){
+            return ;
+        }
+        if(root.left == null && root.right == null ){
+            result.add(root.val);
+            return;
+        }
+       getleaves(root.left, result); 
+       getleaves(root.right, result); 
+        
+        
+    }
+    public void rightboundary(TreeNode root,List<Integer>result){
+        if(root == null ||(root.left == null && root.right== null)){
+            return;
+        }
+        
+        if(root.right!= null){
+            rightboundary(root.right, result);
+        }else{
+            rightboundary(root.left, result);
+        }
+        result.add(root.val);
+        
+    }
+}
+
+Approach2:
 class Solution {
     public void addleaves(List<Integer> list, TreeNode root) {
           if(root == null){
