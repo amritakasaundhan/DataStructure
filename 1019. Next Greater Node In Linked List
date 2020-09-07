@@ -1,11 +1,68 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
+
+Approach2:
+Approach2: Using two stacks. 
+in first iteration store all the list elements in stack.
+in next iteration check if stack top element is greater than newstack element then pop the element from stack and store it in new stack
+else keep popping from newstack until the top element is greater than stack top element. at anytime if new stack is empty while popping means no 
+element is greater than the value. hence put 0 at index
+
+This will will result in reverese order. 
+At the end reverse the result array
+class Solution {
+    public int[] nextLargerNodes(ListNode head) {
+        if(head == null){
+            return new int[0];
+        }
+        Stack<Integer>stack = new Stack<>();
+        ListNode curr = head;
+        while(curr != null){
+            stack.push(curr.val);
+            curr = curr.next;
+        }
+        int[] result = new int[stack.size()];
+        result[0] = 0;
+        int index = 1;
+        Stack<Integer> newStack = new Stack<>();
+        newStack.push(Integer.valueOf(stack.pop()));
+        while(!stack.isEmpty()){
+            if(stack.peek() < newStack.peek()){
+               result[index++] = newStack.peek();
+               newStack.push(Integer.valueOf(stack.pop()));
+            }else{
+               while(!newStack.isEmpty()) { 
+                   if(newStack.peek() <= stack.peek()){
+                       newStack.pop();
+                   }else{
+                       break;
+                   }
+                   
+               }
+                if(newStack.isEmpty()){
+                    result[index++] = 0;
+                    newStack.push(Integer.valueOf(stack.pop()));
+                }else{
+                   result[index++] = newStack.peek();
+                   newStack.push(Integer.valueOf(stack.pop())); 
+                }
+            }
+            
+            
+        }
+        int start = 0;
+        int end = result.length-1;
+        while(start < end){
+           int temp = result[start];
+            result[start] = result[end];
+            result[end] = temp;
+            start++;
+            end--;
+        }
+        return result;
+        
+    }
+}
+
+Approach1:
 class Solution {
     public int[] nextLargerNodes(ListNode head) {
         if(head == null){
