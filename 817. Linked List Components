@@ -1,0 +1,31 @@
+Appoach1: 
+Store array elements in set. 
+take a count variable and boolean flag to keep a track of number of connected component.
+while traversing in list check if the set contains element and flag is flase. Increment count and set flag to true in order avoid adding nexr element connected to it
+at any time if counter the list item is not present in set, make this flag to false.
+at the end return count
+class Solution {
+    public int numComponents(ListNode head, int[] G) {
+        if(head == null || G.length == 0){
+            return 0;
+        }
+        Set<Integer> set = new HashSet<Integer>();
+        for(int num : G){
+            set.add(num);
+        }
+        ListNode curr = head;
+        int count = 0;
+        boolean continue_flag = false;
+        while(curr != null){
+           if(set.contains(curr.val) && continue_flag == false){
+               count += 1;
+               continue_flag = true;
+           }else if (!set.contains(curr.val)){
+               continue_flag = false;
+           }
+            curr = curr.next;
+        }
+        return count;
+        
+    }
+}
