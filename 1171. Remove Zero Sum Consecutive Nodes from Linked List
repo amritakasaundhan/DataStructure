@@ -1,0 +1,49 @@
+Approach: Bruteforce approach:
+Using two pointers in two for loop, one from head and another from poniter1.next. 
+Keep on checking the sum, at anytime if sum == 0, break the loop, skip the elements that are included in forming sum ==0.
+else assign it in newhead.
+class Solution {
+    public ListNode removeZeroSumSublists(ListNode head) {
+        if(head == null || (head.next == null && head.val == 0)){
+            return null;
+        }
+        if(head.next == null && head.val != 0){
+            return head;
+        }
+        ListNode temphead  = new ListNode(0);
+        ListNode newHead = temphead;
+        ListNode pt1 = head;
+        while(pt1 != null){
+            ListNode pt2 = pt1.next;
+            int sum = pt1.val;
+            if(sum == 0){
+               pt1 = pt1.next;
+               newHead.next = null;
+               continue; 
+            }
+            while(pt2 != null){
+                sum += pt2.val;
+                if(sum == 0){
+                    break;
+                }
+                pt2 = pt2.next;
+            }
+            if(sum == 0){
+                newHead.next = null;
+                if(pt2 != null){ 
+                    pt1 = pt2.next; 
+                }else{
+                    break;
+                }
+              
+            }else{
+               newHead.next = pt1;
+               newHead = newHead.next;
+               pt1 = pt1.next;
+            }
+            
+            
+        }
+        return temphead.next;
+    }
+}
