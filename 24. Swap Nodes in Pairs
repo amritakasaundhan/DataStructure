@@ -1,0 +1,36 @@
+Using two pointers starting from head and second to start from head.next.
+keep on interating until both pointers are not null. and swap the odd and even nodes. Create a dummy node to track new head.
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next== null){
+            return head;
+        }
+        ListNode odd = head;
+        ListNode even = head.next;
+        // ListNode prev = head;
+        ListNode start = new ListNode(0);
+        ListNode newhead = start;
+        ListNode prev = null;
+        while(odd != null && even != null){
+            // ListNode temp = odd;
+            odd.next = even.next;
+            ListNode tempodd = even.next;
+            even.next = odd;
+            //ListNode tempeven = even;
+            if(start.next == null){
+                start.next = even;
+            }else{
+                prev.next = even;
+            }
+            prev = odd;
+            
+            odd = tempodd;
+            if(odd != null){
+               even = tempodd.next; 
+            }
+            
+        }
+        return start.next;
+        
+    }
+}
