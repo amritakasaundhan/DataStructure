@@ -1,0 +1,19 @@
+Approach: Using inverse inorder and a variable to store sum sofar until the node. traverse to extrement right, update the root value with sum and root value.
+
+class Solution {
+    int TreeSum = 0;
+    public TreeNode bstToGst(TreeNode root) {
+        if(root == null){
+            return null;
+        }
+         
+        bstToGst(root.right);
+        root.val += TreeSum;
+        TreeSum = root.val;
+        bstToGst(root.left);   
+        return root;
+    }
+    
+    
+    
+}
