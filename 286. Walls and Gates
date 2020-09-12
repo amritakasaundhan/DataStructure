@@ -1,0 +1,32 @@
+Apply DFS as soon as encounter 0 and keep on doing dfs in all four directions, at every level the curr value of level is less than curr level reutrn , if indices are out of bound return
+
+
+class Solution {
+    public void wallsAndGates(int[][] rooms) {
+       if(rooms.length == 0 || rooms[0].length == 0){
+           return;
+       }
+        int m = rooms.length;
+        int n = rooms[0].length;
+        boolean[][] visited = new boolean[m][n];
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j< n; j++){
+                if(rooms[i][j] == 0){
+                    dfs(rooms, i, j, 0);
+                    //visited = new boolean[m][n];
+                }
+            }
+        }
+    }
+    public void dfs(int[][] rooms, int start, int end, int level){
+        if(start < 0 || end < 0 || start >= rooms.length || end >= rooms[0].length || rooms[start][end] < level){
+            return ;
+        }
+        // visited[start][end] = true;
+        rooms[start][end] =  level;
+        dfs(rooms, start+1, end, level+1);
+        dfs(rooms, start-1, end, level+1);
+        dfs(rooms, start, end+1, level+1);
+        dfs(rooms, start, end-1, level+1);
+    }
+}
