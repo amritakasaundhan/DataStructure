@@ -1,0 +1,52 @@
+Apprpach: iterate in array using two pointers. and using that keep a track of min value so far and max value so far. If the absolute difference is greater than limit
+if the differnece is less than limit, increment arraylenth by one and increment pointer2 by one. and in a variable maxlength, keep storing max length so far
+elss if differnece is greater than limit then, Increment pointer by one and poiter2 to poniter1+1, adjust min and max of pointer1 and pointer 2 and arraylength to 1
+
+class Solution {
+    public int longestSubarray(int[] nums, int limit) {
+        if(nums.length == 0){
+          return 0;
+        } 
+        if(nums.length < 2){
+            return 1;
+        } 
+        int p1 = 0;
+        int p2 = 1;
+        int longest_array = Integer.MIN_VALUE;
+        int array_length = 1;
+        int min = Math.min(nums[0], nums[1]);
+        int max = Math.max(nums[0], nums[1]);
+        while(p2 < nums.length){
+            if(min > nums[p2]){
+              min = nums[p2];  
+            }
+            //min = Math.min(min, nums[p2]);
+            if(max < nums[p2]){
+                max = nums[p2];
+            }
+            //max = Math.max(max, nums[p2]);
+            
+            if(max-min <= limit){
+                array_length++;
+                p2++;
+            }else{
+                p1++;
+                p2 = p1+1;
+                if(p2 < nums.length){
+                    if(nums[p2] > nums[p1]){
+                       max = nums[p2];
+                       min = nums[p1];
+                    }else{
+                       max = nums[p1];
+                       min = nums[p2]; 
+                    }
+
+                }
+                array_length = 1;
+            }
+            longest_array = Math.max(longest_array,array_length) ;          
+        }
+
+        return longest_array;
+    }
+}
