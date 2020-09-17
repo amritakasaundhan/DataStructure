@@ -1,0 +1,33 @@
+Using DFS-> Track down the currsum until the node and at leaf node check if currsum is equals to sum then list in result list else just return.
+we will have one list to add node val while traversing. 
+
+class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+       if(root== null){
+           return new ArrayList<>();
+       }
+        List<List<Integer>> result = new ArrayList<>();
+        //List<Integer> list = new ArrayList<>();
+        dfs(root, new ArrayList<>(), result, sum, 0);
+        return result;
+    }
+    public void dfs(TreeNode root, List<Integer> list, List<List<Integer>> result, int sum, int currsum){
+        if(root == null){
+            return;
+        }
+        if(root.left == null && root.right == null && root.val+currsum == sum){
+            list.add(root.val);
+            result.add(new ArrayList<>(list));
+            list.remove(list.size()-1);
+            return;
+        }else if (root.left == null && root.right == null && root.val+currsum != sum){
+            return;
+        }
+        list.add(root.val);
+        dfs(root.left, list, result, sum, currsum+root.val);
+        
+        //list.remove(list.size()-1);
+        dfs(root.right, list, result, sum, currsum+root.val);
+        list.remove(list.size()-1);
+    }
+}
