@@ -1,6 +1,70 @@
-Approach: Using brute force solution. For every word in word array check if the word exist in board. If it does, add in result.
+Approach1: Using brute force solution. For every word in word array check if the word exist in board. If it does, add in result.
 Time complexisty O(m*n*l(size of word array))
 
+Approach: 2 Using Trie, build a tries of list of words and apply in dfs in matrix. At every indices check if the indices is not visited and indices are within bound. 
+and check if root.word is not null add in the result list.
+
+class TrieNode{
+    TrieNode[] nodes = new TrieNode[26];
+    String word;
+    public TrieNode(){
+        for(int i = 0 ; i < nodes.length ; i++){
+            nodes[i] = null;
+        }
+        word = null;
+    }
+}
+
+class Solution { 
+    public TrieNode buildTrie(String[] words){
+        TrieNode root = new TrieNode();
+        for(String word : words){
+            TrieNode curr = root;
+            for(char ch : word.toCharArray()){
+                int index = ch - 'a';
+                if(curr.nodes[index]== null){
+                    curr.nodes[index] = new TrieNode();
+                }
+                curr = curr.nodes[index];
+            }
+            curr.word = word;
+        }
+        return root;
+    }
+    List<String> result = new ArrayList<>();
+    public List<String> findWords(char[][] board, String[] words) {
+        if(board.length == 0 || board[0].length == 0){
+            return new ArrayList<>();
+        }
+        TrieNode root = buildTrie(words);
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0 ; j < board[0].length; j++){
+                dfs(board, root, visited, i , j);
+            }
+        }
+        return result;
+    }
+    public void dfs(char[][] board, TrieNode root, boolean[][] visited, int i, int j){
+        if(i < 0 || j < 0 || i >= board.length || j >= board[0].length || visited[i][j] == true || root.nodes[board[i][j]-'a'] == null){
+            return;
+        }
+        root = root.nodes[board[i][j] - 'a'];
+        if(root.word != null){
+            result.add(root.word);
+            root.word = null;
+        }
+        visited[i][j] = true;
+        dfs(board, root , visited, i+1, j);
+        dfs(board, root, visited, i-1, j);
+        dfs(board, root, visited, i, j+1);
+        dfs(board, root, visited, i, j-1);
+       visited[i][j] = false;
+    }
+      
+}
+
+Approach1:
 class Solution {
     List<String> result = new ArrayList<>();
     public List<String> findWords(char[][] board, String[] words) {
