@@ -1,0 +1,59 @@
+Approach: I will use TreeMap and Priority queue to keep track of max element so far.
+as soon as jth index is covered, delete the element of jth index in treemap or decrement the count by one so ensure that element is not incuded twice.
+pop the element from queue until it exists in map. 
+and then sotre the top element in result array.
+Time Complexity is O(n)
+space- o(n)
+while iterating in array, check if element at jth index present in TreeMpa
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        List<Integer> result = new ArrayList<>();
+        PriorityQueue<Integer> queue = new PriorityQueue<>((x, y) -> Integer.compare(y, x));
+         Map<Integer, Integer> set =  
+               new TreeMap<Integer, Integer>(Collections.reverseOrder());
+        for(int i = 0; i < k; i++){
+            queue.add(nums[i]);
+            int count = set.getOrDefault(nums[i], 0);
+            set.put(nums[i], count+1);
+        }
+        result.add(queue.peek());
+        if(nums[0] == queue.peek()){
+            queue.poll();
+        }
+        int firstelemntcount = set.getOrDefault(nums[0], 0);
+        firstelemntcount--;
+        if(firstelemntcount<= 0){
+           set.remove(nums[0]); 
+        }else{
+            set.put(nums[0], firstelemntcount);
+        }
+        int j = 0;
+        while(j+k < nums.length){
+           queue.add(nums[j+k]);
+            int count = set.getOrDefault(nums[j+k], 0);
+            set.put(nums[j+k], count+1);
+            while(!set.containsKey(queue.peek())){
+                queue.poll();
+                
+            }
+            result.add(queue.peek());
+            j++;
+            int cnt = set.getOrDefault(nums[j], 0);
+            cnt--;
+            if(cnt <= 0){
+               set.remove(nums[j]); 
+            }else{
+                set.put(nums[j], cnt);
+            }
+          // System.out.println("map ->"+set);  
+            
+        }
+        int[] resultarray = new int[result.size()];
+        for(int i = 0; i < result.size(); i++){
+            resultarray[i] = result.get(i);
+        }
+        return resultarray;
+        
+    }
+}
