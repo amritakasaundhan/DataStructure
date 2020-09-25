@@ -1,0 +1,36 @@
+Approach2: Using two maps. one to store the start index, while other to store the end index of a characters within string.
+Now start would be first character's first occurance and end would its last occurance within the string. keep updating end until the charcter start is less or euqal to curr start.
+As soon as the currrent character start is greater than the end, update the length of string by(end-start+1) and update the start with current character start and end with end of occurance
+
+class Solution {
+    public List<Integer> partitionLabels(String S) {
+      if(S.length() == 0){
+          return new ArrayList<>();
+      }
+        Map<Character, Integer> startindex = new HashMap<>();
+        Map<Character, Integer> endindex = new HashMap<>();
+        for(int i = 0; i < S.length(); i++){
+            char ch = S.charAt(i);
+            if(!startindex.containsKey(ch)){
+               startindex.put(ch, i); 
+            }
+            endindex.put(ch, i);
+        }
+        int start = startindex.get(S.charAt(0));
+        int end = endindex.get(S.charAt(0));
+        List<Integer> result = new ArrayList<>();
+        for(int i = 1; i < S.length(); i++){
+            char ch = S.charAt(i);
+            if(startindex.get(ch) <= end){
+                end = Math.max(end,endindex.get(ch));
+                //start = end+1;
+            }else{
+               result.add(end-start+1);
+                start = startindex.get(ch);
+                end = endindex.get(ch);
+            }
+        }
+        result.add(end-start+1);
+        return result;
+    }
+}
