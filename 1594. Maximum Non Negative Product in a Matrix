@@ -1,0 +1,87 @@
+Approach1: Using DP, keep storing max product and min product so far in a 2d array. 
+The Array would be of type pair to store min and max so far in the array.
+if the number is negaive then keep max of upper and left indices product and multiply by current element to get min 
+to get maximum, take minium of upper and left indices product so far and multiply by current element to get max
+
+if the number is greater than 0 and then just keep max of upper of left product for maximum and min or upper or left product for minimum
+
+Approach2 Using DFS. traverse in matrix and keep updating the thre highest value of product as soon the curr indices reach to the end cell of matrix
+if the max product is negative return -1 else convert long into int and return result
+Time complexity o(m*n)
+Appoach1:
+class Solution {
+    class Pair{
+        long min;
+        long max;
+        public Pair(long max, long min){
+            this.max = max;
+            this.min = min;
+        }
+    }
+    public int maxProductPath(int[][] grid){
+      if(grid.length == 0 || grid[0].length == 0){
+          return -1;
+      }
+        int m = grid.length;
+        int n = grid[0].length;
+      Pair[][] product = new Pair[m][n];
+        product[0][0] = new Pair(grid[0][0], grid[0][0]);
+        for(int i = 1 ; i < m; i++){
+            product[i][0] = new Pair((long)(product[i-1][0].min *(long)grid[i][0]),(long)(product[i-1][0].max *(long)grid[i][0]));
+        }
+        for(int i = 1 ; i < n; i++){
+            product[0][i] = new Pair((long)(product[0][i-1].min *(long)grid[0][i]),(long)(product[0][i-1].max *(long)grid[0][i]));
+        }
+        for(int i = 1; i < grid.length; i++){
+            for(int j = 1; j < grid[0].length; j++){
+                if(grid[i][j] > 0){
+                 product[i][j] = new Pair((long)(Math.max(product[i-1][j].max,product[i][j-1].max)*grid[i][j]),(long)(Math.min(product[i-1][j].min,product[i][j-1].min)*grid[i][j]) );
+                }else{
+                    product[i][j] = new Pair((long)(Math.min(product[i-1][j].min,product[i][j-1].min)*grid[i][j]),(long)(Math.max(product[i-1][j].max,product[i][j-1].max)*grid[i][j]));
+                }
+                System.out.println("i>"+i + " j->"+j+" min->"+ product[i][j].min + " max->"+ product[i][j].max);
+            }
+                
+        }
+        long mod = 1000000007;
+        int result = (int)(product[m-1][n-1].max % mod);
+        if(result < 0){
+            return -1;
+        }else{
+           return result; 
+        }
+    }
+
+}
+Approach2:
+class Solution {
+    long maxProduct = Integer.MIN_VALUE;
+    long mod = 1_000_000_007;
+    public int maxProductPath(int[][] grid) {
+       if(grid.length == 0 || grid[0].length == 0){
+           return -1;
+       }
+        boolean[][] visited = new boolean[grid.length][grid[0].length];
+        dfs(grid, 0, 0, 1, visited);
+        if(maxProduct < 0){
+            return -1;
+        }else{
+            int maxProductint = (int)(maxProduct%mod);
+            return maxProductint;
+        }
+    }
+    public void dfs(int[][] grid, int i , int j , long product, boolean[][] visited){
+        if(i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || visited[i][j]){
+            return;
+        }
+        if(i == grid.length-1 && j == grid[0].length -1){
+           maxProduct = Math.max(maxProduct, product*(long)grid[i][j]);
+           return;
+        }
+        product *= (long) grid[i][j];
+        visited[i][j] = true;
+        dfs(grid, i+1, j, product, visited);
+        dfs(grid, i, j+1, product, visited);
+        visited[i][j] = false;
+    }
+}
