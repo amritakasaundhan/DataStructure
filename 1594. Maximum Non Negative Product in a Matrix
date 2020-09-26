@@ -4,6 +4,8 @@ if the number is negaive then keep max of upper and left indices product and mul
 to get maximum, take minium of upper and left indices product so far and multiply by current element to get max
 
 if the number is greater than 0 and then just keep max of upper of left product for maximum and min or upper or left product for minimum
+It would be faster because we not iterating back in matrix to get product so far unlike dfs.
+
 
 Approach2 Using DFS. traverse in matrix and keep updating the thre highest value of product as soon the curr indices reach to the end cell of matrix
 if the max product is negative return -1 else convert long into int and return result
