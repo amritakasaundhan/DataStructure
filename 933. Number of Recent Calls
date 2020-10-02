@@ -1,0 +1,23 @@
+add the new ping in the queue and then poll it until its peek is less the t-3000.
+return the size of queue.
+
+class RecentCounter {
+    Queue<Integer> queue;
+    public RecentCounter() {
+        queue = new LinkedList<>();
+    }
+    
+    public int ping(int t) {
+        queue.offer(t);
+        while(!queue.isEmpty() && queue.peek() < (t-3000)){
+            queue.poll();
+        }
+        return queue.size();
+    }
+}
+
+/**
+ * Your RecentCounter object will be instantiated and called as such:
+ * RecentCounter obj = new RecentCounter();
+ * int param_1 = obj.ping(t);
+ */
