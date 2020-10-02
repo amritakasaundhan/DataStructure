@@ -1,3 +1,6 @@
+Approach: Keep building new string the until the two string have same characters. Keep on comparing the this string with next String within array. 
+At the end return the new Build string as it will have characters which are common in all of the strings.
+
 class Solution {
     public String longestCommonPrefix(String[] strs) {
         if(strs.length == 0){
