@@ -1,0 +1,22 @@
+Approach:while iterating in list: keep a track of min and max element visited so far 
+and compare min with max value of curr list in arrays and max with min value of arrays. get max of these two and store in variable to keep track max distance so far.
+return maxdistance at the end.
+
+class Solution {
+    public int maxDistance(List<List<Integer>> arrays) {
+       if(arrays.size() == 0){
+           return 0;
+       }
+        int min = arrays.get(0).get(0);
+        int max = arrays.get(0).get(arrays.get(0).size()-1);
+        int maxDistance = Integer.MIN_VALUE;
+        for(int i = 1; i < arrays.size() ; i++){
+            
+            int distance = Math.max(Math.abs(min - arrays.get(i).get(arrays.get(i).size()-1)), max- arrays.get(i).get(0));
+            maxDistance = Math.max(maxDistance, distance);
+            min = Math.min(arrays.get(i).get(0), min);
+            max = Math.max(max, arrays.get(i).get(arrays.get(i).size()-1));
+        }
+        return maxDistance;
+    }
+}
