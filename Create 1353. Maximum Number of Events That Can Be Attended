@@ -1,0 +1,30 @@
+Sort the events by end time, if end time is equal then sort by start time. 
+keep the checking from start time if it exist in set, if does then increment the start until end time. if starttime is less than endtime add this time in set 
+return set size
+
+class Solution {
+    public int maxEvents(int[][] events) {
+        Arrays.sort(events, (a, b) -> a[1] != b[1]? a[1] - b[1]: a[0] - b[0]);
+        Set<Integer> set = new HashSet<>();
+        //int count = 0;
+        for(int[] element : events){
+            if(element[0] == element[1]){
+                if(!set.contains(element[1])){
+                    set.add(element[1]);
+                    //count++;
+                }
+            }else{
+                int starttime = element[0];
+                // int i = element[1];
+                while(set.contains(starttime) && starttime <= element[1]){
+                    starttime++;
+                }
+                if(starttime <= element[1]){
+                    set.add(starttime);
+                    //count++;
+                }
+            }
+        }
+        return set.size();
+    }
+}
