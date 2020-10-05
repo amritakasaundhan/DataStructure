@@ -1,0 +1,24 @@
+Approach: as soon as haystack encounters the first character of needle, check if the substring starting from that index to index+needle length gives the needle. If yes 
+return index,
+else keep on moving next index and at the end return -1, this shows thta at no index haystack contains all the characters of needle.
+
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if(needle.length() == 0){
+            return 0;
+        }
+       if(haystack.length() == 0 || needle.length() > haystack.length()){
+           return -1;
+       }
+        for(int i = 0 ; i < haystack.length(); i++){
+            char ch = haystack.charAt(i);
+            if(ch == needle.charAt(0) && i+needle.length() <= haystack.length()){
+                String str = haystack.substring(i, i+needle.length());
+                if(str.equals(needle)){
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+}
