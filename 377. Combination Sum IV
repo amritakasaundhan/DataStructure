@@ -1,0 +1,48 @@
+class Solution {
+    public int combinationSum4(int[] nums, int target) {
+    int[] comb = new int[target + 1];
+    comb[0] = 1;
+    for (int i = 1; i < comb.length; i++) {
+        for (int j = 0; j < nums.length; j++) {
+            if (i - nums[j] >= 0) {
+                comb[i] += comb[i - nums[j]];
+            }
+        }
+    }
+    return comb[target];
+}
+    // int count = 0;
+    // public int combinationSum4(int[] nums, int target) {
+    //     if(nums.length == 0){
+    //         return 0;
+    //     }
+    //    //  Set<Integer> set = new HashSet<>();
+    //    //  for(int num : nums){
+    //    //      set.add(num);
+    //    //  }
+    //    //  //for(int i = 0 ; i < nums.length ; i++){
+    //    //      recursion(nums, 0,set, target);
+    //    // // }
+    //    //  return count;
+    // }
+//     public void recursion(int nums[], int index, Set<Integer>set, int target){
+//         if(target < 0){
+//             return;
+//         }
+//         if(target == 0){
+//             count++;
+//             return;
+//         }
+        
+//         for(int i = 0; i < nums.length ; i++){
+//             recursion(nums, index, set,target-nums[i]);
+//             index++;
+            
+//         }
+//         // if(set.contains(target)){
+//         //     count++;
+//         //  }
+        
+        
+//     }
+}
