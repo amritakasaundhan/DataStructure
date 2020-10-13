@@ -1,3 +1,9 @@
+Approach1: store the distance and sort by distance. get last desire distance by getting distanct at k-1 th index.
+Now iterate in points and anytime encounter points which has distance less than or equals to lastmax distance add in result
+
+
+Apprach 2: have a priority queue sorted by distance. as soon as the queue size reaches greater than k, poll the element. at the end we will have kpoints which are at min distance  
+in another loop keep storing the points in result until the queue is empty. return result
 class Solution {
     public int getDistance(int xPoint, int yPoint){
         int dis = (xPoint - 0)*(xPoint - 0) + (yPoint - 0)*(yPoint - 0);
