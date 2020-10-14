@@ -1,0 +1,31 @@
+Approach: We will have one LinkedHash map to maintain the order having key i+j and value of type stack.
+because euqal sum of row and columns will lie in same dialogonal. Now we just need to maintain the order. 
+
+class Solution {
+    public int[] findDiagonalOrder(List<List<Integer>> nums) {
+        Map<Integer, Stack<Integer>> map = new LinkedHashMap<>();
+        int count = 0;
+        for(int i = 0 ; i < nums.size(); i ++){
+            List list = nums.get(i);
+            for(int j = 0; j < list.size(); j++){
+                if(!map.containsKey(i+j)){
+                    map.put(i+j, new Stack<>());
+                }
+                map.get(i+j).push(nums.get(i).get(j));
+                count++;
+            }
+        }
+        int [] result = new int [count];
+        int index = 0;
+        for(Map.Entry<Integer, Stack<Integer>> element : map.entrySet()){
+            Stack temp = element.getValue();
+            while(!temp.isEmpty()){
+                result[index] = (int)temp.pop();
+                index++;
+            }
+        }
+        return result;
+    
+        
+    }
+}
