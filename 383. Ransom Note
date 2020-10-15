@@ -1,0 +1,39 @@
+Store the count of magzine in map corresponding to charatcer. 
+in next loop in ransomnote.length-> decrement the count of charatcer as soon as its visited in ransom note. if count <= 0 remove the key. anytime if encounter that map does
+not have key, return false.
+else at the end return true.
+
+
+class Solution {
+    public boolean canConstruct(String magazine, String ransomNote) {
+        if(ransomNote.length() == 0 && magazine.length() == 0){
+            return true;
+        }
+        if(ransomNote.length() == 0){
+            return false;
+        }
+        if(magazine.length() == 0){
+            return true;
+        }
+       Map<Character, Integer> map = new HashMap<>();
+        for(int i = 0; i < ransomNote.length(); i++){
+            int count = map.getOrDefault(ransomNote.charAt(i), 0);
+            map.put(ransomNote.charAt(i), count+1);
+        }
+        System.out.println(""+map);
+        for(char ch : magazine.toCharArray()){
+            if(!map.containsKey(ch)){
+                return false;
+            }
+            int count = map.getOrDefault(ch, 0);
+            count = count-1;
+            if(count <= 0){
+                map.remove(ch);
+            }else{
+                map.put(ch, count);
+            }
+            //System.out.println("inner"+map);
+        }
+        return true;
+    }
+}
