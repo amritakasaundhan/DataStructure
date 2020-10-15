@@ -1,0 +1,41 @@
+Approach: element having i+j sum equals will be in same diagonal
+in first loop store the key as i+j corresponding to the list of matrix element.
+in next iteration, keep a check of direction. if the left is false then add element in result in reverse order else add in original order/
+return result
+
+class Solution {
+    public int[] findDiagonalOrder(int[][] matrix) {
+      if(matrix.length == 0 || matrix[0].length == 0){
+          return new int[0];
+      }
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for(int i = 0; i < matrix.length ; i++){
+            for(int j = 0; j < matrix[0].length ;j++){
+                if(!map.containsKey(i+j)){
+                    map.put(i+j, new ArrayList<>());
+                }
+                map.get(i+j).add(matrix[i][j]);
+            }
+        }
+        int [] result = new int[matrix.length * matrix[0].length];
+        int index = 0;
+        boolean left = false;
+        for(Map.Entry<Integer, List<Integer>> element : map.entrySet()){
+            List list = element.getValue();
+            if(left){
+                for(int i = 0; i < list.size(); i++){
+                    result[index] = (int)list.get(i);
+                    index++;
+                }
+            }else{
+               for(int i = list.size()-1; i >= 0; i--){
+                    result[index] = (int)list.get(i);
+                    index++;
+                } 
+            }
+            left = !left;
+        }
+        return result;
+       
+    }
+}
