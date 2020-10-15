@@ -1,0 +1,30 @@
+Approach1: Using two for loop and comparting starting from both the indices. Time complxisty would be o(n2* length of string)
+Approach 2. We need to keep a track of substring which start from same letter. 
+So we can have two pointers one start from 0th index and other to start at index 1 and a variable to keep a track of currlen of substring which needs to compared with other.
+if we encounter charatcer at start+currlen of string to compared greater than end+currkeb if string then update end with currlen of substring+1,
+if we encounter both charatcers are euqal then we need to update the curr lengnth by one.
+other wise we need to update i with max of i+curr lenth and j and j with one greater than i to compare.
+
+class Solution {
+    public String lastSubstring(String s) {
+        if(s.length() < 2){
+            return s;
+        }
+        int start = 0;
+        int end = 1;
+        int currlen = 0;
+        while(end+currlen < s.length()){
+            if(s.charAt(start+currlen) == s.charAt(end+currlen)){
+                currlen++;
+                continue;
+            }else if(s.charAt(start+currlen) > s.charAt(end+currlen)){
+                end = end+currlen+1;
+            }else{
+                start = Math.max(start+currlen+1, end);
+                end = start+1;
+            }
+            currlen = 0;
+        }
+        return s.substring(start);
+    }
+}
