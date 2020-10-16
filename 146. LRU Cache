@@ -1,3 +1,4 @@
+Approach1:
 We can use LinkedHashMap by overriding the method of removing the oldest element as soon the size is greater than capacity.
 it returns true if the oldest entry needs to be deleted 
 The property of LinkedHashMap is, it stores the elements in the input order. 
@@ -5,6 +6,97 @@ So for put method, we just need to put the method
 
 https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html#removeEldestEntry-java.util.Map.Entry-
 
+Appraoch2:
+We need to have data structure which can store key and value. So we will use HashMap which has key and value would be Double linked List Node.
+With the use doubly linked list we well keep a track of most recently used and lease recently used pair. Head will keep track of most recently used 
+while tail will keep a track of lease recently used. As soon as size of map is greater than capacity we will remove the tail node and then adjust head.
+As we add new node or used get operation on any node, we will adjust head.
+
+class LRUCache {
+    class LinkedNode{
+        int key;
+        int value;
+        LinkedNode next;
+        LinkedNode prev;
+        public LinkedNode(int key, int value){
+            this.key = key;
+            this.value = value;
+            this.next = null;
+            this.prev = null;
+        }
+        
+    }
+    int capacity;
+    Map<Integer, LinkedNode> map;
+    LinkedNode head;
+    LinkedNode tail;
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        this.map = new HashMap<>();
+        head = new LinkedNode(0, 0);
+        tail = new LinkedNode(0, 0);
+        head.next = tail;
+        tail.prev = head;
+        //head = prev;
+    }
+    
+    public int get(int key) {
+        if(!map.containsKey(key)){
+            return -1;
+        }
+        LinkedNode node = map.get(key);
+        moveHead(node);
+        return node.value;
+        
+    }
+    public void moveHead(LinkedNode node){
+        if(head.next != node){
+            remove(node);
+            addNode(node);
+        }
+    }
+    public void remove(LinkedNode node){
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+    public void addNode(LinkedNode node){
+        LinkedNode temp = head.next;
+        head.next = node;
+        node.prev = head;
+        node.next = temp;
+        node.next.prev = node;
+    }
+    
+    public void put(int key, int value) {
+        if(map.containsKey(key)){
+           LinkedNode node = map.get(key);
+            node.value = value;
+            moveHead(node);
+            return;
+        }
+        if(map.size() >= capacity){
+           LinkedNode last = tail.prev;
+            remove(last);
+            map.remove(last.key);
+        }
+        LinkedNode node = new LinkedNode(key, value);
+        map.put(key, node);
+        LinkedNode temp = head.next;
+        head.next = node;
+        node.prev = head;
+        node.next = temp;
+        node.next.prev = node;
+        
+    }
+   
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
 
 class LRUCache {
     int capacity;
