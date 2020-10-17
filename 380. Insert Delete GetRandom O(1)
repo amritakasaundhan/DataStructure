@@ -1,0 +1,53 @@
+Approach: We will use HashMap which will store the value corresponding to the index of list. Using map also allow search operation in O(1) time
+list is to generate random number using random class of java. 
+for insert operation, add value in map and list.
+In case remove operation, to remove the element from random index takes o(n) time 
+ To overcome that, we swap the values between (randomIndex, lastIndex) and always remove the entry from the end of the list.
+ After the swap, you need to update the new index of the swapped value (which was previously at the end of the list)
+    Map<Integer, Integer> map;
+    List<Integer> list;
+    Random rand = new Random();
+    public RandomizedSet() {
+        map = new HashMap<>();
+        list = new ArrayList<>();
+    }
+    
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+    public boolean insert(int val) {
+        if(map.containsKey(val)){
+            return false;
+        }
+        map.put(val, list.size());
+        list.add(list.size(), val);
+        return true;
+        
+    }
+    
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
+    public boolean remove(int val) {
+        if(!map.containsKey(val)){
+            return false;
+        }
+        int lastElement = list.get(list.size() - 1);
+        int idx = map.get(val);
+        list.set(idx, lastElement);
+        map.put(lastElement, idx);
+        list.remove(list.size() - 1);
+        map.remove(val);
+        return true;
+    }
+    
+    /** Get a random element from the set. */
+    public int getRandom() {
+        
+        return list.get(rand.nextInt(list.size())); 
+    }
+}
+
+/**
+ * Your RandomizedSet object will be instantiated and called as such:
+ * RandomizedSet obj = new RandomizedSet();
+ * boolean param_1 = obj.insert(val);
+ * boolean param_2 = obj.remove(val);
+ * int param_3 = obj.getRandom();
+ */
