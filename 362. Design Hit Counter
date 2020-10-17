@@ -1,0 +1,42 @@
+/*
+Approach: Using queue. In every hit add the timestamp in queue.
+while performaing gethits, pop the elements from queue until the sum of peek timestamp of queue and curr timestamp is greater or equals to 300. return the size of queue.
+
+In case of number of hits per second could be very large? -> We can have a pair class
+which will have timestamp and corresoding the hit counts.
+And we can use deque instead of queue to check the last timestamp in queue.
+in case of hit check if last time stamp is equals to the curr timestamp, then update pair count having the curr time stamp.
+else create a new pair and add it in deque.
+
+*/
+
+
+class HitCounter {
+
+    Queue<Integer> queue;
+    public HitCounter() {
+        queue = new LinkedList<>();
+    }
+    
+    /** Record a hit.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    public void hit(int timestamp) {
+        queue.add(timestamp);
+    }
+    
+    /** Return the number of hits in the past 5 minutes.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    public int getHits(int timestamp) {
+        while(!queue.isEmpty() && (timestamp-queue.peek() >= 300)){
+            queue.poll();
+        }
+              return queue.size();
+    }
+}
+
+/**
+ * Your HitCounter object will be instantiated and called as such:
+ * HitCounter obj = new HitCounter();
+ * obj.hit(timestamp);
+ * int param_2 = obj.getHits(timestamp);
+ */
