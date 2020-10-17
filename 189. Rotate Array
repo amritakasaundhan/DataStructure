@@ -1,0 +1,28 @@
+Approach1: Using extra array to rotate the array and then put this rotated arrays value to input array. 
+Time Complexity o(n) and space O(n)
+
+class Solution {
+    public void rotate(int[] nums, int k) {
+        if(k == 0 || nums.length == 0){
+            return;
+        }
+        k = k%nums.length;
+        int[] result = new int[nums.length];
+        int index = 0;
+        int currindex = nums.length -k;
+        while(currindex < nums.length){
+            result[index] = nums[currindex];
+            index++;
+            currindex++;
+        }
+        currindex = nums.length -k-1;
+        for(int i = 0; i <= currindex; i++){
+            result[index] = nums[i];
+            index++;
+        }
+        for(int i = 0; i < nums.length ; i++){
+            nums[i] = result[i];
+        }
+        
+    }
+}
