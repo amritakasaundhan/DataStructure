@@ -1,7 +1,35 @@
 Approach1: Using extra array to rotate the array and then put this rotated arrays value to input array. 
 Time Complexity o(n) and space O(n)
+Appoach2: By reversing array, First reverse all the numbers in array. Then reverse first k number in array and then reverse last n-k numbers in array. 
+Time Complexity o(n) and space O(1)
+Approach2: 
 
 class Solution {
+    public void rotate(int[] nums, int k) {
+        if(k == 0 || nums.length == 0){
+            return;
+        }
+        k = k%nums.length;
+        reverse(nums, 0, nums.length-1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, nums.length-1);
+        
+    }
+    public void reverse(int[] nums, int start, int end){
+        if(nums.length == 0 || start >= end){
+            return;
+        }
+        while(start < end){
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}
+
+Approach1: class Solution {
     public void rotate(int[] nums, int k) {
         if(k == 0 || nums.length == 0){
             return;
