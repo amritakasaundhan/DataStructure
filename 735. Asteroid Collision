@@ -1,0 +1,73 @@
+/*
+-><-
+[-5, -5, 4, 6]
+
+[-5, -5, -4, -6]
+[5, 5, 4, 6]
+[10, 2, -5, -8]
+10, 2, 
+[-2, -1, 1, 2]
+[2, -1, 1, 2]
+[-2, 1, 1, 2]
+Approach: Using stack-> push asteriods in stack until encounter first position element. Add first positive element. 
+Because collision will occur when from left side positive and from right side the negative asterioid collide. 
+Now after first position asteroid, push the asteroid in stack if its positive. 
+if its negative then, collision will happen. if the abosulute value of right asteroid is equals to peek element of stack means. BOth will dessolved. remove peek from stack.
+if the stack peek has greater value than abosolute of right asteroid means, right asteroid will dissolved move next.
+if the stack peek element is less than the absolute value of right asteroid then 
+    -> keep on popping element from stack until its peek is less than the current right asteroid
+    -> in case stack got empty or stack peek element is negative means negative asteroid broke all of the positive asteroid so far so add the negative one in stack -
+    -> also if stack peek and right asteroid has equal value then we will remove the last element but not add the right asteroid. We can use a boolean to check that
+*/
+
+class Solution {
+    public int[] asteroidCollision(int[] asteroids) {
+        if(asteroids.length == 0){
+            return new int[0];
+        }
+        Stack<Integer> result = new Stack<>();
+        int i = 0;
+        while(i < asteroids.length && asteroids[i] < 0){
+            result.push(asteroids[i]);
+            i++;
+        }
+        if(i < asteroids.length-1){
+            result.push(asteroids[i]);
+            i++;
+        }
+        while(i < asteroids.length){
+            if(asteroids[i] > 0){
+              
+                result.push(asteroids[i]);
+            }
+            else if(result.size() > 0 && asteroids[i] < 0 && result.peek() == Math.abs(asteroids[i])){
+                result.pop();
+            }else if(result.size() > 0 && asteroids[i] < 0 && result.peek() > Math.abs(asteroids[i])){
+                i++;
+                continue;
+            }else{
+                boolean breakloop = false;
+                while(!result.isEmpty() && result.peek() > 0 && result.peek() <= Math.abs(asteroids[i])){
+                if(result.peek() == Math.abs(asteroids[i])){
+                   result.pop();
+                    breakloop = true;
+                    break;
+                }
+                    result.pop();
+                    
+                }
+                if((result.isEmpty() && breakloop == false )||( !result.isEmpty() && result.peek() < 0 && breakloop == false)){
+                    result.push(asteroids[i]);
+                }
+                
+            }
+            i++;
+        }
+        
+        int[] remainingAsteriods = new int[result.size()];
+        for(int j = 0; j < result.size(); j++){
+            remainingAsteriods[j] = result.get(j);
+        }
+        return remainingAsteriods;
+    }
+}
