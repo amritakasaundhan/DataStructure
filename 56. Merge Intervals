@@ -1,0 +1,44 @@
+Sort the array in acending order. In case the first indices are two then sort based on second index.
+[[2, 4][1, 4], [1, 3]] -> sorted [[1, 3], [1, 4], [2, 4]]
+Now if the first index of first interval is less than first index of second interval and second index of first interval is less than first index of second interval
+that means the interval needs to merged. 
+update the second index that is the end interval with max of end time of first and second interval.
+in else case, means interval cant be merged , add it the previous interval in list and update first interval with curr interval.
+
+Time Complexity(nlog n)-> sorting 
+
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        if(intervals.length == 0 || intervals[0].length == 0){
+            return new int[0][0];
+        }
+        if(intervals.length < 2){
+            return intervals;
+        }
+       Arrays.sort(intervals, (a, b)-> a[0] != b[0] ? a[0]-b[0] :a[1]-b[1] );
+        // System.out.println(Arrays.deepToString(intervals));
+       List<int[]> result = new ArrayList<>();
+        int [] first =  new int []{intervals[0][0], intervals[0][1]};
+        for(int i = 1 ; i < intervals.length ; i++){
+            if(first[0] <= intervals[i][0] && first[1] >= intervals[i][0]){
+                if(first[1] < intervals[i][1]){
+                   first[1] =  intervals[i][1];
+                }
+            }else{
+                result.add(first);
+                first = new int[]{intervals[i][0], intervals[i][1]};
+            }
+            if(i == intervals.length-1){
+                result.add(first);
+            }
+        }
+        
+        int[][] interval = new int[result.size()][2];
+        int index = 0;
+        for(int [] num : result){
+            interval[index] = num;
+            index++;
+        }
+        return interval;
+    }
+}
