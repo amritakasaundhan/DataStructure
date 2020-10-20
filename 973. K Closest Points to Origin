@@ -4,6 +4,35 @@ Now iterate in points and anytime encounter points which has distance less than 
 
 Apprach 2: have a priority queue sorted by distance. as soon as the queue size reaches greater than k, poll the element. at the end we will have kpoints which are at min distance  
 in another loop keep storing the points in result until the queue is empty. return result
+
+
+class Solution {
+    public int[][] kClosest(int[][] points, int K) {
+        if(K == 0 || points.length == 0){
+            return new int[0][0];
+        }
+        if(K >= points.length){
+            return points;
+        }
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a,b)->(b[0]*b[0]+b[1]*b[1]) -(a[0]*a[0]+a[1]*a[1]));
+        int[][]result = new int[K][2];
+        for(int[] point : points){
+            queue.add(new int[] {point[0], point[1]});
+            if(queue.size() > K){
+                queue.poll();
+            }
+        }
+        for(int i = 0 ; i < K; i++){
+            int [] p = queue.poll();
+            result[i][0] = p[0];
+            result[i][1] = p[1];
+        }
+        return result;
+        
+       
+    }
+}
+Approach1:
 class Solution {
     public int getDistance(int xPoint, int yPoint){
         int dis = (xPoint - 0)*(xPoint - 0) + (yPoint - 0)*(yPoint - 0);
