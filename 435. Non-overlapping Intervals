@@ -1,0 +1,25 @@
+Approach: Sort by end time of intervals and have a variable count to count the number of overlapping intervals.
+
+if current start time is less than end time of previous interval, means there is overlap. increment the count else update the end time with current end time of interval.
+
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if(intervals.length < 2){
+            return 0;
+        }
+        Arrays.sort(intervals, (a, b) ->  a[1]-b[1]);
+        //System.out.println(Arrays.deepToString(intervals));
+        int count = 0;
+        int[] start = new int [] {intervals[0][0], intervals[0][1]};
+        for(int i = 1; i < intervals.length; i++){
+            if( intervals[i][0] < start[1] ){
+                count++;
+            }else{
+                start = new int[] {intervals[i][0], intervals[i][1]};
+            }
+            //System.out.println(Arrays.toString(start) + "count->"+count);
+        }
+        
+        return count;
+    }
+}
