@@ -1,3 +1,57 @@
+Apprpach1: Using two stacks-> one to store the order of insertion and other to store the min element. 
+if case of push operation if minstack is not empty and its peek is less than x then push in minstack and stack.
+in case og pop operation if the two stack have same peek then pop from both stack else pop from first stack 
+in case of get min return minstack peek.
+in case of top operation return stack.peek.
+Approach2: using one stack and one variable:
+if case of push operation if x is less than min. push min in stack and then update min with x and then push x in stack.
+in case of pop operation. Pop only in stack peek is equals to stack peek.
+in case of top operation return stack.peek
+in case getmin return min
+
+class MinStack {
+    Stack<Integer>stack;
+    int min;
+
+    public MinStack() {
+        stack = new Stack<>();
+        min = Integer.MAX_VALUE;
+    }
+    
+    public void push(int x) {
+        if(x <= min){
+            stack.push(min);
+            min = x;
+        }
+        stack.push(x);
+        
+    }
+    
+    public void pop() {
+        if(stack.pop().equals(min)){
+            min = stack.pop();
+            
+        }
+    }
+    
+    public int top() {
+        return stack.peek();
+    }
+    
+    public int getMin() {
+        return min;
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(x);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
+
 class MinStack {
 
     /** initialize your data structure here. */
