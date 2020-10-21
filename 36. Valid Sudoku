@@ -1,0 +1,29 @@
+/*
+Add number in set corresponding to row and column and block. if any time number is present in same row or columns return false. 
+we can create block using diving i and j by 3. and check if a number exists in i/3 +j/3 block.
+*/
+
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        if(board.length < 9 || board.length > 9 || board[0].length < 9 || board[0].length > 9){
+            return false;
+        }
+        Set set = new HashSet();
+        for(int i = 0; i < board.length ; i++){
+            for(int j = 0; j < board[0].length ; j++){
+                char ch = board[i][j];
+                if(ch != '.'){
+                   if(set.contains(ch + "in row" +i) || set.contains(ch+ "in column" +j) || set.contains(ch+"in block" + i/3+"_"+j/3)){
+                       return false;
+                   }
+                    set.add(ch + "in row" +i);
+                    set.add(ch+ "in column" +j);
+                    set.add(ch+"in block" + i/3+"_"+j/3);
+                }
+                
+            }
+        }
+        return true;
+        
+    }
+}
