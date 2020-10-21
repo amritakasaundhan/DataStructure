@@ -1,0 +1,47 @@
+/*Apprpoach1: Brute Force approach where crate a new array by merging both sorted array in sorted order. then find median. 
+Time Complexity-> O(mn) Space Complexity-> O(mn)
+
+Approach2: Applying Binary search where divide both the array in left and right. Say and X and Y. Compare max of left X with min of rightyY and min of rightX with max if leftY.
+if left of X is less than or euqals to min of right of y and min of right x < max of left Y that we means reach to median. If its even number average of max of leftX \
+and rightY and min of right X and max of left y, else return max of max leftx and min of righty
+
+else if min of right of X is less than max of max of left y than means we are more towards right then adjust left with partition Xplus 1.
+else adjust right with partitionX-1
+
+
+
+
+*/
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if(nums1.length > nums2.length){
+            return findMedianSortedArrays(nums2, nums1);
+        }
+        int x = nums1.length; //7
+        int y = nums2.length; //8
+        int left = 0;
+        int right = x; //7
+        while(left <= right){
+            int partitionX = (left+right)/2; //3
+            int partitionY = (x+y+1)/2 - partitionX; // 5 == 1 plays well with both even and odd number of array
+            int leftX = partitionX == 0 ? Integer.MIN_VALUE: nums1[partitionX-1];
+            int rightX = partitionX == x ? Integer.MAX_VALUE: nums1[partitionX];
+            int leftY = partitionY == 0 ? Integer.MIN_VALUE: nums2[partitionY-1];
+            int rightY = partitionY == y ? Integer.MAX_VALUE: nums2[partitionY];
+            
+            if(leftX <= rightY && rightX >= leftY){
+                if((x+y)%2 == 0){
+                    return ((double)Math.max(leftX, leftY) + Math.min(rightX, rightY))/2;
+                }else{
+                    return Math.max(leftX,leftY);
+                }
+            }else if (rightX < leftY){
+                left = partitionX+1;
+            }else{
+                right = partitionX-1;
+            }
+            
+        }
+        throw new IllegalArgumentException(); 
+    }
+}
