@@ -1,0 +1,17 @@
+/*
+Alice will win for every even number
+And Bob will winf or every odd number
+Do dry run for even and odd numner to come to conclusion
+
+*/
+
+class Solution {
+    public boolean divisorGame(int N) {
+       if(N%2 == 0){
+           return true;
+       }else{
+           return false;
+       } 
+        
+    }
+}
