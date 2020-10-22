@@ -1,0 +1,32 @@
+Approach: Using two pointers. add the element at jth position to sum. 
+if currsum is greater or equals to s, update the minlen with minium of minlen and (j-i+1), increment both the pointer. We also need to sustract the sum with nums[i] and nums[j]
+by sustracting sum with element at ith position, we will try to find min length even after removing element at ith position.
+sine we are adding element at jth position in every iteration hence we will have to sustract nums[j] also.
+in else case increment j by one.
+
+
+class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        if(nums.length == 0){
+            return 0;
+        }
+        int i = 0;
+        int j = 0;
+        int sum = 0;
+        int minlen = Integer.MAX_VALUE;
+        while(j < nums.length && i < nums.length){
+           sum += nums[j];
+            if(sum >= s){
+               minlen = Math.min(minlen, (j-i+1));
+                sum = sum-nums[i];
+                sum = sum-nums[j];
+                i++;
+            }else{
+                j++;
+            }
+            
+        
+        }
+        return minlen == Integer.MAX_VALUE ? 0 : minlen;
+    }
+}
