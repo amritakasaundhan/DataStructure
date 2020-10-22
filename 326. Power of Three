@@ -1,0 +1,15 @@
+first of all number has to be divisible by 3 throught in order to order to be its power. 
+keep on dividing the number by 3 until its divisble by.
+At the end if the n is equals to 1 return true else false.
+
+class Solution {
+    public boolean isPowerOfThree(int n) {
+        if(n < 1){
+            return false;
+        }
+        while(n%3 == 0){
+            n = n/3;
+        }
+        return n==1;
+    }
+}
