@@ -1,0 +1,33 @@
+Approach: Usinng map and variable intialize at length of t. Store the count of characters of String s.
+in next ieration, keep on checking the character of string t. If the character if present in map. increment minlen by one and decrement the count of character. 
+If this count is less or equals to 0 then remove the character from map. 
+return minlen
+
+class Solution {
+    public int minSteps(String s, String t) {
+        if(t.length() == 0 || s.length() == 0){
+            return 0;
+        }
+        Map<Character, Integer> map = new HashMap<>();
+        for(int i = 0 ; i < s.length(); i++){
+            char ch = s.charAt(i);
+            int count = map.getOrDefault(ch, 0);
+            map.put(ch, count+1);
+        }
+        int minLen = s.length();
+        for(int i = 0; i < t.length(); i++){
+            char ch = t.charAt(i);
+            if(map.containsKey(ch)){
+                minLen--;
+                int count = map.get(ch);
+                count--;
+                if(count <= 0){
+                    map.remove(ch);
+                }else{
+                    map.put(ch, count);
+                }
+            }
+        }
+        return minLen;
+    }
+}
