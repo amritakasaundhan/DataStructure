@@ -11,6 +11,81 @@ We need to have data structure which can store key and value. So we will use Has
 With the use doubly linked list we well keep a track of most recently used and lease recently used pair. Head will keep track of most recently used 
 while tail will keep a track of lease recently used. As soon as size of map is greater than capacity we will remove the tail node and then adjust head.
 As we add new node or used get operation on any node, we will adjust head.
+Latest: 
+class LRUCache {
+    class LinkedMap{
+        int key;
+        int value;
+        LinkedMap prev;
+        LinkedMap next;
+        public LinkedMap(int key, int value){
+            this.key = key;
+            this.value = value;
+            this.prev = null;
+            this.next = null;
+        }
+    }
+    /*0 -> 0
+        <-
+    
+    */
+    int capacity;
+    HashMap<Integer, LinkedMap> map;
+    LinkedMap head;
+    LinkedMap tail;
+    public LRUCache(int capacity) {
+        map = new HashMap<Integer, LinkedMap>();
+        head = new LinkedMap(0, 0);
+        tail = new LinkedMap(0, 0);
+        head.next = tail;
+        tail.prev = head;
+        this.capacity = capacity;
+    }
+    
+    public int get(int key) {
+        if(!map.containsKey(key)){
+            return -1;
+        }
+        LinkedMap node = map.get(key);
+        put(node.key, node.value);
+        return node.value;
+        
+    }
+    public void removeNode(LinkedMap node){
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        
+    }
+    
+    public void put(int key, int value) {
+        if(map.containsKey(key)){
+          LinkedMap val = map.get(key);
+            removeNode(val);
+            map.remove(val.key);
+            
+        }else if(map.size() >= capacity){
+            LinkedMap last = tail.prev;
+            removeNode(last);
+            map.remove(last.key);
+        }
+        LinkedMap node = new LinkedMap(key, value);
+        map.put(key, node);
+        LinkedMap temp = head.next;
+        head.next = node;
+        node.next = temp;
+        node.prev = head;
+        node.next.prev = node;      
+        
+    }
+   
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
 
 class LRUCache {
     class LinkedNode{
