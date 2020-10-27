@@ -1,0 +1,27 @@
+Approach1: keep iterating in loop until n > 0 and keep multiplying answer with x. 
+Time complexity o(n)
+Approach2: Actually we need to half of n Eg: n to power 10 can be caculated by multipling n^5 * n^5
+keep diving n by 2 and in case of odd number update the answer by  answer*curr_product along with keep on updating currproduct *= currProduct
+at the end return answer
+
+class Solution {
+    public double myPow(double x, int n) {
+        long N = n;
+        if (N < 0) {
+            x = 1 / x;
+            N = -N;
+        }
+        double ans = 1;
+        double current_product = x;
+        for (long i = N; i > 0; i /= 2) {
+            if ((i % 2) == 1) {
+                ans = ans * current_product;
+            }
+            current_product = current_product * current_product;
+            //System.out.println("i->"+ i + " ans->"+ ans+ " currPreod->"+ current_product);
+        }
+        return ans;
+    
+        
+    }
+}
