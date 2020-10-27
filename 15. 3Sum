@@ -14,8 +14,35 @@ Approach2: using two pointers and sorting the sorting array at first place which
 6. if sum is less than zero then increment j pointer by one
 7. if sum is euqal to zero then add elements in list and  increment j pointer by one and decrekment j by one
 8. also verify that element at j-1 and k+1 are not equal to avoid duplicate elements in array
+Approach3: Using Set-> to avoid the sorting time
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        if(nums.length < 3){
+            return new ArrayList<>();
+        }
+        Set<List<Integer>> result = new HashSet<>();
+        Set<Integer> set = new HashSet<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length ; i++){
+            if(!set.contains(nums[i])){
+                for(int j = i+1; j < nums.length ; j++){
+                    int sum = -(nums[i]+nums[j]);
+                    if(map.containsKey(sum) && map.get(sum) == i){
+                        List<Integer> list = Arrays.asList(nums[i], nums[j], sum);
+                        Collections.sort(list);
+                        result.add(list);
+                    }else{
+                        map.put(nums[j], i);
+                    }
+                }
+            }
+                        
+        }
+        return new ArrayList<>(result);
+        
+    }
 
-
+}
 
 
 
